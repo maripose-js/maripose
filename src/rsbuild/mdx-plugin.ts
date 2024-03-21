@@ -1,7 +1,7 @@
 //https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-mdx
 
 import type { RsbuildPlugin } from "@rsbuild/core";
-import type { CordConfig } from "../utils/config.ts";
+import type { MariposeConfig } from "../utils/config.ts";
 
 function createRegExp(exts: string[]): RegExp {
   const matcher = exts.map((ext) => ext.slice(1)).join("|");
@@ -11,7 +11,7 @@ function createRegExp(exts: string[]): RegExp {
   );
 }
 
-export const pluginMdx = (config: CordConfig): RsbuildPlugin => ({
+export const pluginMdx = (config: MariposeConfig): RsbuildPlugin => ({
   name: "rsbuild:mdx",
 
   setup(api) {

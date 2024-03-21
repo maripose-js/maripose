@@ -24,9 +24,9 @@ const main = async () => {
   const dev = devCommand(cliArgs);
   const main = defineCommand({
     meta: {
-      name: "cord",
+      name: "mari",
       version: version,
-      description: "Cordelius",
+      description: "Maripose",
     },
     subCommands: {
       dev,

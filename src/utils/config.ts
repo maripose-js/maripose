@@ -2,49 +2,50 @@ import path from "path";
 import * as fs from "fs";
 import { normalize, resolve } from "pathe";
 import { loadConfig, watchConfig } from "c12";
-import type { CordInstance } from "../context.ts";
+import type { MariposeInstance } from "../context.ts";
 import type { WatchOptions } from "chokidar";
 import type { ServerOptions } from "../server/http.ts";
 import { defu } from "defu";
 import type { PluggableList } from "unified";
 import type { RsbuildConfig } from "@rsbuild/core";
 
-export const CONFIG_FILE = "cord.config.ts";
+export const CONFIG_FILE = "maripose.config.ts";
 export const resolvePath = (root: string, file: string) =>
   normalize(path.join(root, file)).replaceAll("/", "\\");
 
-export interface CordConfig {
+export interface MariposeConfig {
   /**
    * Root directory
    */
-  root?: string;
+  root: string;
 
   /**
    * Assets directory
    */
-  assetsDir?: string;
+  assetsDir: string;
 
   /**
    * Directory to build to
    */
-  buildDir?: string;
+  buildDir: string;
 
   /**
    * HMR options
    */
-  watch?: WatchOptions;
+  watch: WatchOptions;
 
   /**
    * Server options
    */
-  server?: ServerOptions;
+  server: ServerOptions;
 
   /**
    * Markdown options.
    */
-  markdown?: {
+  markdown: {
     remarkPlugins?: PluggableList;
     rehypePlugins?: PluggableList;
+    //TODO: add shiki options
   };
 
   /**
@@ -53,19 +54,26 @@ export interface CordConfig {
   rsbuild?: RsbuildConfig;
 
   /**
+   * Site config
+   */
+  site: SiteConfig;
+}
+
+export type SiteConfig = {
+  /**
    * Base path
    */
-  basePath?: string;
-}
+  basePath: string;
+};
 
 export const resolveConfig = async (
   root: string = process.cwd(),
-  ctx: CordInstance,
+  ctx: MariposeInstance,
   cmd: "dev" | "build",
   mode: "development" | "production" = "development"
-): Promise<CordConfig> => {
+): Promise<MariposeConfig> => {
   const configFile = resolvePath(root, CONFIG_FILE);
-  let userConfig: CordConfig | undefined;
+  let userConfig: Partial<MariposeConfig> | undefined;
 
   if (!fs.existsSync(configFile)) {
     throw new Error(`No config file found at ${CONFIG_FILE}`);
@@ -73,10 +81,10 @@ export const resolveConfig = async (
 
   const config = await loadConfig({
     cwd: root,
-    name: "cord",
+    name: "maripose",
   });
 
-  userConfig = config.config as CordConfig;
+  userConfig = config.config as Partial<MariposeConfig>;
 
   const basicRoot = userConfig?.root || root || ".";
   const rootDir = path.isAbsolute(basicRoot)
@@ -100,10 +108,12 @@ export const resolveConfig = async (
     buildDir,
     watch: userConfig?.watch ?? {},
     server: serverOptions,
-    basePath: userConfig?.basePath || "/docs",
-  } as CordConfig;
+    site: {
+      basePath: userConfig?.site?.basePath || "/",
+    },
+  } as MariposeConfig;
 };
 
-export const defineConfig = (config: CordConfig) => {
+export const defineConfig = (config: Partial<MariposeConfig>) => {
   return config;
 };

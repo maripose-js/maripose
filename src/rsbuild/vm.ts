@@ -1,8 +1,13 @@
 import type { RsbuildPlugin } from "@rsbuild/core";
 import { RspackVirtualModulePlugin } from "rspack-plugin-virtual-module";
 import { createRouter } from "./router.ts";
+import type { SiteConfig } from "../utils/config.ts";
 
-type Ctx = { tempDir: string; router: ReturnType<typeof createRouter> };
+type Ctx = {
+  tempDir: string;
+  router: ReturnType<typeof createRouter>;
+  mariposeConfig: SiteConfig;
+};
 
 export function virtualModules(ctx: Ctx): RsbuildPlugin {
   return {
@@ -26,6 +31,8 @@ export function virtualModules(ctx: Ctx): RsbuildPlugin {
 
 const siteData = async (ctx: Ctx) => {
   return {
-    ["virtual-site-data"]: ctx.router.generate(),
+    ["virtual-site-data"]:
+      ctx.router.generate() +
+      `; export const siteData = ${JSON.stringify(ctx.mariposeConfig)};`,
   };
 };

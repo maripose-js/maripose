@@ -7,7 +7,7 @@ const prefix = (color: string) => {
   return (
     pc.dim(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`) +
     //@ts-ignore
-    ` ${pc.bold(pc[color](`[cord]`))}`
+    ` ${pc.bold(pc[color](`[maripose]`))}`
   );
 };
 

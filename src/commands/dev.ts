@@ -14,14 +14,19 @@ export const devCommand = (sharedArgs: any) =>
       const { _, root, ...argv } = args;
       const colors = createLogger();
       console.log(
-        `\n  ${colors.green(`${colors.bold(packageName.toUpperCase())}`)} v${cordVersion}`,
+        `\n  ${colors.green(
+          `${colors.bold(packageName.toUpperCase())}`
+        )} v${cordVersion}`
       );
 
       try {
         await createDevServer(args);
       } catch (err) {
+        console.log(err);
         colors.error(
-          `Failed to start dev server: ${colors.reset(colors.red(colors.bold(err as string)))}`,
+          `Failed to start dev server: ${colors.reset(
+            colors.red(colors.bold(err as string))
+          )}`
         );
         process.exit(1);
       }

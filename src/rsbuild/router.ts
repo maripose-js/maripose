@@ -1,20 +1,27 @@
 import { globby } from "globby";
 import { joinURL, withLeadingSlash } from "ufo";
 import path from "path";
-import type { CordInstance } from "../context.ts";
+import pt from "path";
+import type { MariposeInstance } from "../context.ts";
 
 export type RouteInput = {
   route: string;
   file: string;
   fullPath: string;
+  tab: Tab;
 };
+
+export type Tab = {
+  name: string;
+  path: string;
+} | null;
 
 export type Route = RouteInput & {
   comp: React.ReactNode;
   preload: () => Promise<any>;
 };
 
-export const createRouter = (routesDir: string, ctx: CordInstance) => {
+export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
   let routes: RouteInput[] = [];
 
   return {
@@ -25,14 +32,12 @@ export const createRouter = (routesDir: string, ctx: CordInstance) => {
       });
 
       files.forEach((file) => {
+        const route = resolveRouteFromPath(file, ctx, routesDir);
         routes.push({
           file,
-          route: withLeadingSlash(
-            /index\.(mdx|md)$/.test(file)
-              ? resolveRouteFromPath(file)
-              : joinURL(ctx.config?.basePath!, resolveRouteFromPath(file))
-          ),
+          route: withLeadingSlash(route.path),
           fullPath: path.join(routesDir, file),
+          tab: route.tab,
         });
       });
     },
@@ -50,7 +55,9 @@ export const createRouter = (routesDir: string, ctx: CordInstance) => {
           (route, index) =>
             `{ fullPath: '${route.fullPath.replaceAll("\\", "/")}', route: '${
               route.route
-            }', comp: createElement(R${index}), file: '${
+            }', comp: createElement(R${index}), tab: ${JSON.stringify(
+              route.tab
+            )}, file: '${
               route.file
             }', preload: async () => { await R${index}.preload(); return import("${route.fullPath.replaceAll(
               "\\",
@@ -62,9 +69,45 @@ export const createRouter = (routesDir: string, ctx: CordInstance) => {
   };
 };
 
-//TODO: improve this function
-export const resolveRouteFromPath = (path: string) => {
-  return path.replace(/\.[^.]+$/, "").replaceAll("index", "/");
+export const resolveRouteFromPath = (
+  _path: string,
+  ctx: MariposeInstance,
+  routesDir: string
+): {
+  path: string;
+  tab: Tab;
+} => {
+  const path = /index\.(mdx|md)$/.test(_path)
+    ? _path
+    : joinURL(ctx.config?.site.basePath!, _path);
+
+  console.log(
+    /index\.(mdx|md)$/.test(path)
+      ? path
+      : joinURL(ctx.config?.site.basePath!, path)
+  );
+  const segments = path.split("/");
+  const regex = /tab-([a-zA-Z0-9-]+)/;
+
+  for (const segment of segments) {
+    if (regex.test(segment)) {
+      return {
+        path: path
+          .replace(/\.[^.]+$/, "")
+          .replace("tab-", "")
+          .replaceAll("index", ""),
+        tab: {
+          name: segment.replace("tab-", ""),
+          path: pt.join(routesDir, segment),
+        },
+      };
+    }
+  }
+
+  return {
+    path: path.replace(/\.[^.]+$/, "").replaceAll("index", "/"),
+    tab: null,
+  };
 };
 
 export const matchRoutes = (

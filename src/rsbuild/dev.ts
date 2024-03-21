@@ -1,8 +1,8 @@
-import type { CordInstance } from "../context.ts";
+import type { MariposeInstance } from "../context.ts";
 import { isProduction } from "std-env";
 import type { RsbuildConfig } from "@rsbuild/core";
 import type { ServerOptions } from "../server/http.ts";
-import type { CordConfig } from "../utils/config.ts";
+import type { MariposeConfig } from "../utils/config.ts";
 import path from "path";
 import { fileURLToPath } from "url";
 import { pluginMdx } from "./mdx-plugin.ts";
@@ -21,7 +21,7 @@ export const CLIENT_ENTRY = path.join(
   "client.js"
 );
 
-export const rsDev = async (ctx: CordInstance, options: ServerOptions) => {
+export const rsDev = async (ctx: MariposeInstance, options: ServerOptions) => {
   const {
     default: { createRsbuild, mergeRsbuildConfig },
   } = await import("@rsbuild/core");
@@ -35,10 +35,12 @@ export const rsDev = async (ctx: CordInstance, options: ServerOptions) => {
   const rsbuild = await createRsbuild({
     rsbuildConfig: mergeRsbuildConfig(rsBuildConfig, ctx.config?.rsbuild!),
   });
+
   rsbuild.addPlugins([
     virtualModules({
-      tempDir: ".cord/runtime",
+      tempDir: ".maripose/runtime",
       router,
+      mariposeConfig: ctx.config?.site!,
     }),
     pluginMdx(ctx.config!),
     pluginReact(),
@@ -47,7 +49,7 @@ export const rsDev = async (ctx: CordInstance, options: ServerOptions) => {
 };
 
 export const createRsbuildConfig = (
-  ctg: CordConfig,
+  ctg: MariposeConfig,
   options: ServerOptions
 ): RsbuildConfig => {
   const browserslist = {
@@ -86,7 +88,7 @@ export const createRsbuildConfig = (
       entry: {
         index: CLIENT_ENTRY,
       },
-      include: [`${process.cwd() + "\\node_modules\\.cord\\runtime"}`],
+      include: [`${process.cwd() + "\\node_modules\\.maripose\\runtime"}`],
     },
     performance: {
       printFileSize: true,

@@ -1,5 +1,5 @@
 import { getPort } from "get-port-please";
-import type { CordInstance } from "../context.ts";
+import type { MariposeInstance } from "../context.ts";
 import { isPortAvailable } from "../utils/port.ts";
 
 export type ServerOptions = {
@@ -21,7 +21,7 @@ export type ServerOptions = {
   hostname?: string;
 };
 
-export const getServerOptions = async (ctx: CordInstance) => {
+export const getServerOptions = async (ctx: MariposeInstance) => {
   const options = ctx.config?.server;
 
   if (

@@ -18,7 +18,7 @@ export const createDevServer = async (args: any) => {
 
     const { server } = await builder.startDevServer();
     watcher.on("all", async (action, path) => {
-      if (path.includes("cord.")) {
+      if (path.includes("maripose.")) {
         ctx.logger.info(`updated config file: ${path}`);
         await ctx.hooks.callHook("restart");
       }

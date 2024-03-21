@@ -1,5 +1,5 @@
 import type { WatchOptions } from "chokidar";
-import type { CordConfig } from "./utils/config.ts";
+import type { MariposeConfig } from "./utils/config.ts";
 
 export const globby_ignore = [
   /(^|[\/\\])\../,
@@ -7,7 +7,7 @@ export const globby_ignore = [
   "**/node_modules/**",
 ];
 export const resolveWatcherOptions = (
-  config: CordConfig | undefined
+  config: MariposeConfig | undefined
 ): WatchOptions => {
   const options = config?.watch || {};
   const { ignored, ...rest } = options;
