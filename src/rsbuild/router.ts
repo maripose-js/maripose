@@ -3,6 +3,7 @@ import { joinURL, withLeadingSlash } from "ufo";
 import path from "path";
 import pt from "path";
 import type { MariposeInstance } from "../context.ts";
+import React from "react";
 
 export type RouteInput = {
   route: string;

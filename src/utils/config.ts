@@ -64,6 +64,42 @@ export type SiteConfig = {
    * Base path
    */
   basePath: string;
+
+  /**
+   * Links to your social media
+   */
+  socialsLinks: {
+    icon: string;
+    link: string;
+  }[];
+
+  /**
+   * Navbar links
+   */
+  navbarLinks: NavLink[];
+
+  /**
+   * Logo for the site
+   */
+  logo: string;
+
+  /**
+   * Title for the site
+   */
+  title: string;
+
+  /**
+   * Description for the site
+   */
+  description: string;
+};
+
+export type NavLink = {
+  text: string;
+  link: string;
+  target?: string;
+  rel?: string;
+  icon?: string;
 };
 
 export const resolveConfig = async (

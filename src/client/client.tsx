@@ -5,6 +5,11 @@ import { NotFound } from "./pages/not-found.tsx";
 import { Layout } from "./layout.tsx";
 import { HomePage } from "./pages/home-page.tsx";
 import type { Route } from "../rsbuild/router.ts";
+import "./globals.css";
+
+import { createHead, useHead } from "unhead";
+
+const head = createHead();
 
 export type PageData = {
   meta: any;
@@ -13,6 +18,10 @@ export type PageData = {
 
 const App = () => {
   const [data, setData] = React.useState<PageData | null>(null);
+
+  useHead({
+    title: "My awesome site",
+  });
 
   useEffect(() => {
     const fetchData = async () => {

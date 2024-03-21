@@ -11,12 +11,21 @@
   },
   "devDependencies": {
     "@modern-js/module-tools": "^2.48.2",
+    "@modern-js/plugin-tailwindcss": "^2.48.3",
     "@types/fs-extra": "^11.0.4",
     "@types/react": "^18.2.62",
     "@types/react-dom": "^18.2.19",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "postcss-loader": "^8.1.1",
+    "postcss-preset-mantine": "^1.13.0",
+    "postcss-simple-vars": "^7.0.1",
+    "tailwindcss": "^3.4.1",
     "typescript": "^5.4.3"
   },
   "dependencies": {
+    "@mantine/core": "^7.6.2",
+    "@mantine/hooks": "^7.6.2",
     "@mdx-js/mdx": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@rsbuild/core": "0.5.0",
@@ -42,6 +51,7 @@
     "rspack-plugin-virtual-module": "^0.1.12",
     "std-env": "^3.7.0",
     "ufo": "^1.5.2",
+    "unhead": "^1.8.20",
     "unified": "^11.0.4",
     "unist-util-visit-children": "^3.0.0"
   }

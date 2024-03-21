@@ -1,12 +1,11 @@
+import { Button } from "@mantine/core";
+
 export const HomePage = ({ meta }: { meta: any }) => {
   return (
-    <>
-      {meta.features.map((feature: any) => (
-        <div>
-          <h1>{feature.title}</h1>
-          <p>{feature.details}</p>
-        </div>
-      ))}
-    </>
+    <div>
+      <Button variant="filled" radius="lg">
+        Button
+      </Button>
+    </div>
   );
 };
