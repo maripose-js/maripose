@@ -27,9 +27,9 @@ export default async function mdxLoader(
 ${code}
 MDXContent.__PAGE_META__ = {};
 
-MDXContent.__PAGE_META__["${encodeURIComponent(
-      path.relative(context.rootContext, filePath)
-    )}"] = ${JSON.stringify(data)};
+MDXContent.__PAGE_META__["${encodeURIComponent(filePath)}"] = ${JSON.stringify(
+      data
+    )};
 `;
 
     callback(null, result);

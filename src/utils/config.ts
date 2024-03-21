@@ -51,6 +51,11 @@ export interface CordConfig {
    * Rsbuild options
    */
   rsbuild?: RsbuildConfig;
+
+  /**
+   * Base path
+   */
+  basePath?: string;
 }
 
 export const resolveConfig = async (
@@ -95,6 +100,7 @@ export const resolveConfig = async (
     buildDir,
     watch: userConfig?.watch ?? {},
     server: serverOptions,
+    basePath: userConfig?.basePath || "/docs",
   } as CordConfig;
 };
 

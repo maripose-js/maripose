@@ -1,6 +1,7 @@
 import { globby } from "globby";
-import { withLeadingSlash } from "ufo";
+import { joinURL, withLeadingSlash } from "ufo";
 import path from "path";
+import type { CordInstance } from "../context.ts";
 
 export type RouteInput = {
   route: string;
@@ -13,7 +14,7 @@ export type Route = RouteInput & {
   preload: () => Promise<any>;
 };
 
-export const createRouter = (routesDir: string) => {
+export const createRouter = (routesDir: string, ctx: CordInstance) => {
   let routes: RouteInput[] = [];
 
   return {
@@ -26,7 +27,11 @@ export const createRouter = (routesDir: string) => {
       files.forEach((file) => {
         routes.push({
           file,
-          route: withLeadingSlash(resolveRouteFromPath(file)),
+          route: withLeadingSlash(
+            /index\.(mdx|md)$/.test(file)
+              ? resolveRouteFromPath(file)
+              : joinURL(ctx.config?.basePath!, resolveRouteFromPath(file))
+          ),
           fullPath: path.join(routesDir, file),
         });
       });
@@ -62,7 +67,10 @@ export const resolveRouteFromPath = (path: string) => {
   return path.replace(/\.[^.]+$/, "").replaceAll("index", "/");
 };
 
-export const matchRoutes = (routes: Route[], pathname: string) => {
+export const matchRoutes = (
+  routes: Route[],
+  pathname: string
+): Route | undefined | null => {
   if (pathname === "/" || pathname === "") {
     return routes.find((route) => route.route === "/");
   }

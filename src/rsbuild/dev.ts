@@ -27,7 +27,7 @@ export const rsDev = async (ctx: CordInstance, options: ServerOptions) => {
   } = await import("@rsbuild/core");
   const { pluginReact } = await import("@rsbuild/plugin-react");
   const routesDir = path.join(ctx.config?.root!, "src");
-  const router = createRouter(routesDir);
+  const router = createRouter(routesDir, ctx);
 
   await router.init();
 

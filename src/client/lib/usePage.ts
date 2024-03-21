@@ -1,28 +1,30 @@
-import { useEffect, useState } from "react";
 import { matchRoutes, type Route } from "../../rsbuild/router.ts";
 import { routes } from "virtual-site-data";
+import type { PageData } from "../client.tsx";
 
-export const usePage = () => {
-  const [route, setRoute] = useState<Route>();
-  const [meta, setMeta] = useState<any>();
+export const usePage = async (): Promise<PageData | undefined> => {
+  let route: Route;
+  let meta: any;
 
-  useEffect(() => {
-    const _match = matchRoutes(routes, window.location.pathname);
-    const match = Array.isArray(_match) ? _match[0] : _match;
+  const _match = matchRoutes(routes, window.location.pathname);
+  const match = Array.isArray(_match) ? _match[0] : _match;
 
-    if (match) {
-      const fetchData = async () => {
-        setRoute(match);
+  if (match) {
+    route = match;
+    await match.preload().then((_meta: any) => {
+      meta =
+        _meta.default.__PAGE_META__[
+          encodeURIComponent(match?.fullPath.replaceAll("/", "\\"))
+        ];
+    });
 
-        await match.preload().then((meta: any) => {
-          setMeta(
-            meta.default.__PAGE_META__[encodeURIComponent(match.file)] ?? {}
-          );
-        });
-      };
-      void fetchData();
+    if (route) {
+      return { route, meta };
     }
-  }, [window.location.pathname]);
+  }
 
-  return { route, meta };
+  return {
+    route: null,
+    meta: null,
+  };
 };
