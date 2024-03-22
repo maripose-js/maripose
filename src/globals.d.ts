@@ -4,3 +4,5 @@ declare module "virtual-site-data" {
   export const routes: Route[];
   export const siteData: SiteConfig;
 }
+
+declare module "virtual-custom-css";

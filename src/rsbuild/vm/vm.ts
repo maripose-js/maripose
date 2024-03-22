@@ -1,21 +1,22 @@
 import type { RsbuildPlugin } from "@rsbuild/core";
 import { RspackVirtualModulePlugin } from "rspack-plugin-virtual-module";
-import { createRouter } from "./router.ts";
-import type { SiteConfig } from "../utils/config.ts";
+import { createRouter } from "../router.ts";
+import type { MariposeConfig } from "../../utils/config.ts";
+import { customCss } from "./custom-css.ts";
 
-type Ctx = {
+export type VmCtx = {
   tempDir: string;
   router: ReturnType<typeof createRouter>;
-  mariposeConfig: Partial<SiteConfig>;
+  config: MariposeConfig;
 };
 
-export function virtualModules(ctx: Ctx): RsbuildPlugin {
+export function virtualModules(ctx: VmCtx): RsbuildPlugin {
   return {
     name: "virtual-modules",
     setup(api) {
       api.modifyBundlerChain(async (bundlerChain) => {
         const runtimeModule: Record<string, string> = {};
-        for (const factory of [siteData]) {
+        for (const factory of [siteData, customCss]) {
           const moduleResult = await factory(ctx);
           Object.assign(runtimeModule, moduleResult);
         }
@@ -29,10 +30,10 @@ export function virtualModules(ctx: Ctx): RsbuildPlugin {
   };
 }
 
-const siteData = async (ctx: Ctx) => {
+const siteData = async (ctx: VmCtx) => {
   return {
     ["virtual-site-data"]:
       ctx.router.generate() +
-      `; export const siteData = ${JSON.stringify(ctx.mariposeConfig)};`,
+      `; export const siteData = ${JSON.stringify(ctx.config.site)};`,
   };
 };

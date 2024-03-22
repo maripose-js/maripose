@@ -102,6 +102,11 @@ export type SiteConfig = {
    * Anchors showed on top of the sidebar
    */
   anchors: NavLink[];
+
+  /**
+   * Path to your custom css file
+   */
+  styles: string | string[];
 };
 
 export type NavLink = {
@@ -185,6 +190,7 @@ export const resolveConfig = async (
       description: userConfig?.site?.description || "",
       redirects: userConfig?.site?.redirects || {},
       anchors: userConfig?.site?.anchors || [],
+      styles: userConfig?.site?.styles || [],
     },
   } as MariposeConfig;
 };

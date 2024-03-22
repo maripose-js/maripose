@@ -6,7 +6,7 @@ import type { MariposeConfig } from "../utils/config.ts";
 import path from "path";
 import { fileURLToPath } from "url";
 import { pluginMdx } from "./mdx-plugin.ts";
-import { virtualModules } from "./vm.ts";
+import { virtualModules } from "./vm/vm.ts";
 import { createRouter } from "./router.ts";
 import * as fs from "fs-extra";
 
@@ -40,7 +40,7 @@ export const rsDev = async (ctx: MariposeInstance, options: ServerOptions) => {
     virtualModules({
       tempDir: ".maripose/runtime",
       router,
-      mariposeConfig: ctx.config?.site!,
+      config: ctx.config!,
     }),
     pluginMdx(ctx.config!),
     pluginReact(),

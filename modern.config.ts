@@ -55,6 +55,7 @@ export default defineConfig({
         "react-dom",
         "virtual-site-data",
         "tailwindcss",
+        "virtual-custom-css",
       ],
       style: {
         tailwindcss: { ...tailwindConfig },

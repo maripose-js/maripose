@@ -1,5 +1,7 @@
 import { defineConfig } from "../src";
 
 export default defineConfig({
-  site: {},
+  site: {
+    styles: ["./src/globals.css"],
+  },
 });
