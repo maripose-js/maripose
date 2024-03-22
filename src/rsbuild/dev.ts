@@ -75,6 +75,7 @@ export const createRsbuildConfig = (
     },
     dev: {
       progressBar: false,
+      writeToDisk: true,
     },
     output: {
       targets: ["web"],
@@ -83,6 +84,11 @@ export const createRsbuildConfig = (
       },
       overrideBrowserslist: browserslist,
       assetPrefix: "/",
+      injectStyles: true,
+      minify: {
+        js: true,
+        css: true,
+      },
     },
     source: {
       entry: {

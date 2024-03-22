@@ -46,24 +46,21 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
       return `import { createElement } from 'react'; import { lazyWithPreload } from "react-lazy-with-preload"; ${routes
         .map(
           (route, index) =>
-            `const R${index} = lazyWithPreload(() => import('${route.fullPath.replaceAll(
+            `const R${index}Path = "${route.fullPath.replaceAll(
               "\\",
               "/"
-            )}')) `
+            )}"; const R${index} = lazyWithPreload(() => import(R${index}Path)) `
         )
         .join("; ")} ; export const routes = [${routes
         .map(
           (route, index) =>
-            `{ fullPath: '${route.fullPath.replaceAll("\\", "/")}', route: '${
+            `{ fullPath: R${index}Path, route: '${
               route.route
             }', comp: createElement(R${index}), tab: ${JSON.stringify(
               route.tab
             )}, file: '${
               route.file
-            }', preload: async () => { await R${index}.preload(); return import("${route.fullPath.replaceAll(
-              "\\",
-              "/"
-            )}") } }`
+            }', preload: async () => { await R${index}.preload(); return import(R${index}Path) } }`
         )
         .join(",")}]`;
     },
@@ -80,7 +77,7 @@ export const resolveRouteFromPath = (
 } => {
   const path = /index\.(mdx|md)$/.test(_path)
     ? _path
-    : joinURL(ctx.config?.site.basePath!, _path);
+    : joinURL(ctx.config?.site?.basePath!, _path);
 
   const segments = path.split("/");
   const regex = /tab-([a-zA-Z0-9-]+)/;

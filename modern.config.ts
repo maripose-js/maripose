@@ -18,6 +18,7 @@ export default defineConfig({
       },
       buildType: "bundle",
       format: "esm",
+      minify: "esbuild",
       target: "esnext",
       outDir: "dist",
       sourceMap: true,
@@ -32,6 +33,7 @@ export default defineConfig({
       target: "es2020",
       outDir: "dist",
       sourceMap: true,
+      minify: "terser",
       externals: ["bun", "react", "react-dom", "virtual-site-data"],
     },
     {
@@ -43,6 +45,7 @@ export default defineConfig({
       target: "es2020",
       outDir: "dist/client",
       sourceMap: true,
+      minify: "terser",
       banner: {
         js: "import './client.css';",
       },
@@ -55,21 +58,6 @@ export default defineConfig({
       ],
       style: {
         tailwindcss: { ...tailwindConfig },
-        modules: {
-          localsConvention: "camelCase",
-          generateScopedName(name, filename) {
-            const relative = path
-              .relative(__dirname, filename)
-              .replace(/\\/g, "/");
-            const hash = crypto
-              // @ts-ignore
-              .createHash("sha256")
-              .update(relative)
-              .digest("hex")
-              .slice(0, 5);
-            return `${name}_${hash}`;
-          },
-        },
       },
     },
   ],

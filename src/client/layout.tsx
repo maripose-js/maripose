@@ -1,5 +1,6 @@
+//Only import the components you need to reduce bundle size
+import "@mantine/core/styles/Button.css";
 import React from "react";
-import "@mantine/core/styles.css";
 import { AppShell, Burger } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 

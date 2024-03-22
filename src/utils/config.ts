@@ -56,7 +56,7 @@ export interface MariposeConfig {
   /**
    * Site config
    */
-  site: SiteConfig;
+  site?: Partial<SiteConfig>;
 }
 
 export type SiteConfig = {

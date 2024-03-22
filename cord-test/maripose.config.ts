@@ -1,3 +1,9 @@
-import {defineConfig} from "../src";
+import { defineConfig } from "../src";
 
-export default defineConfig({})
+export default defineConfig({
+  site: {
+    redirects: {
+      "/": "/home",
+    },
+  },
+});

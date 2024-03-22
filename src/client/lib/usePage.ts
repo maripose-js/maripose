@@ -1,6 +1,7 @@
 import { matchRoutes, type Route } from "../../rsbuild/router.ts";
-import { routes } from "virtual-site-data";
+import { routes, siteData } from "virtual-site-data";
 import type { PageData } from "../client.tsx";
+import { isSamePath } from "ufo";
 
 export const usePage = async (): Promise<PageData | undefined> => {
   let route: Route;
@@ -10,6 +11,17 @@ export const usePage = async (): Promise<PageData | undefined> => {
   const match = Array.isArray(_match) ? _match[0] : _match;
 
   if (match) {
+    const redirects = Object.entries(siteData.redirects);
+    let redirect = match.route;
+    if (
+      redirects.some(([from, to]: any) => {
+        redirect = to;
+        return isSamePath(from, match.route);
+      })
+    ) {
+      window.location.href = redirect;
+      return;
+    }
     route = match;
     await match.preload().then((_meta: any) => {
       meta =

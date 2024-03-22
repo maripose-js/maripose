@@ -6,7 +6,7 @@ import type { SiteConfig } from "../utils/config.ts";
 type Ctx = {
   tempDir: string;
   router: ReturnType<typeof createRouter>;
-  mariposeConfig: SiteConfig;
+  mariposeConfig: Partial<SiteConfig>;
 };
 
 export function virtualModules(ctx: Ctx): RsbuildPlugin {
