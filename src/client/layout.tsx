@@ -1,5 +1,4 @@
 import React from "react";
-import NextTopLoader from "nextjs-toploader";
 import "@mantine/core/styles.css";
 import { AppShell, Burger } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -14,7 +13,6 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <MantineProvider theme={theme}>
-        <NextTopLoader color="#59cdb5" />
         <AppShell header={{ height: 60 }} padding="md">
           <AppShell.Header>
             <Burger
