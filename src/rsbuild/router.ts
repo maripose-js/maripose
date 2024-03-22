@@ -46,21 +46,24 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
       return `import { createElement } from 'react'; import { lazyWithPreload } from "react-lazy-with-preload"; ${routes
         .map(
           (route, index) =>
-            `const R${index}Path = "${route.fullPath.replaceAll(
+            `const R${index} = lazyWithPreload(() => import('${route.fullPath.replaceAll(
               "\\",
               "/"
-            )}"; const R${index} = lazyWithPreload(() => import(R${index}Path)) `
+            )}')) `
         )
         .join("; ")} ; export const routes = [${routes
         .map(
           (route, index) =>
-            `{ fullPath: R${index}Path, route: '${
+            `{ fullPath: '${route.fullPath.replaceAll("\\", "/")}', route: '${
               route.route
             }', comp: createElement(R${index}), tab: ${JSON.stringify(
               route.tab
             )}, file: '${
               route.file
-            }', preload: async () => { await R${index}.preload(); return import(R${index}Path) } }`
+            }', preload: async () => { await R${index}.preload(); return import("${route.fullPath.replaceAll(
+              "\\",
+              "/"
+            )}") } }`
         )
         .join(",")}]`;
     },

@@ -2,7 +2,6 @@ import { matchRoutes, type Route } from "../../rsbuild/router.ts";
 import { routes, siteData } from "virtual-site-data";
 import type { PageData } from "../client.tsx";
 import { isSamePath } from "ufo";
-
 export const usePage = async (): Promise<PageData | undefined> => {
   let route: Route;
   let meta: any;

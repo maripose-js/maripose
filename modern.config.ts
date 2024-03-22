@@ -47,7 +47,7 @@ export default defineConfig({
       sourceMap: true,
       minify: "terser",
       banner: {
-        js: "import './client.css';",
+        js: `import './client.css';`,
       },
       externals: [
         "bun",
