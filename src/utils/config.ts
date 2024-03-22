@@ -79,9 +79,9 @@ export type SiteConfig = {
   navbarLinks: NavLink[];
 
   /**
-   * Logo for the site
+   * Logo options
    */
-  logo: string;
+  logo: LogoOptions;
 
   /**
    * Title for the site
@@ -92,6 +92,16 @@ export type SiteConfig = {
    * Description for the site
    */
   description: string;
+
+  /**
+   * Route redirects
+   */
+  redirects: Record<string, string>;
+
+  /**
+   * Anchors showed on top of the sidebar
+   */
+  anchors: NavLink[];
 };
 
 export type NavLink = {
@@ -100,6 +110,28 @@ export type NavLink = {
   target?: string;
   rel?: string;
   icon?: string;
+};
+
+export type LogoOptions = {
+  /**
+   * Path to the dark logo
+   */
+  dark: string;
+
+  /**
+   * Path to the light logo
+   */
+  light: string;
+
+  /**
+   * Alt text for the logo
+   */
+  alt?: string;
+
+  /**
+   * Override default href
+   */
+  href?: string;
 };
 
 export const resolveConfig = async (
@@ -146,6 +178,13 @@ export const resolveConfig = async (
     server: serverOptions,
     site: {
       basePath: userConfig?.site?.basePath || "/",
+      socialsLinks: userConfig?.site?.socialsLinks || [],
+      navbarLinks: userConfig?.site?.navbarLinks || [],
+      logo: userConfig?.site?.logo || { dark: "", light: "" },
+      title: userConfig?.site?.title || "",
+      description: userConfig?.site?.description || "",
+      redirects: userConfig?.site?.redirects || {},
+      anchors: userConfig?.site?.anchors || [],
     },
   } as MariposeConfig;
 };

@@ -82,11 +82,6 @@ export const resolveRouteFromPath = (
     ? _path
     : joinURL(ctx.config?.site.basePath!, _path);
 
-  console.log(
-    /index\.(mdx|md)$/.test(path)
-      ? path
-      : joinURL(ctx.config?.site.basePath!, path)
-  );
   const segments = path.split("/");
   const regex = /tab-([a-zA-Z0-9-]+)/;
 
