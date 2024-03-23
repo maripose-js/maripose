@@ -142,6 +142,11 @@ export type LogoOptions = {
    * Text displayed with the logo
    */
   text?: string;
+
+  /**
+   * Target for the logo link
+   */
+  target?: string;
 };
 
 export const resolveConfig = async (
@@ -152,7 +157,6 @@ export const resolveConfig = async (
 ): Promise<MariposeConfig> => {
   const configFile = resolvePath(root, CONFIG_FILE);
   let userConfig: Partial<MariposeConfig> | undefined;
-  console.log("configFile", configFile);
 
   if (!fs.existsSync(configFile)) {
     throw new Error(`No config file found at ${CONFIG_FILE}`);

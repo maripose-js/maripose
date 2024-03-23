@@ -12,7 +12,8 @@ export const Navbar = () => {
           <div className="flex items-center justify-between">
             <a
               className="inline-flex items-center gap-x-2 text-xl font-semibold dark:text-white"
-              href="#"
+              href={logo.href ? logo.href : "/"}
+              target={logo.target ? logo.target : "_self"}
             >
               <img
                 className="w-10 h-auto"
