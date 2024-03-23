@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.mantine-border {
+  border-color: var(--mantine-color-default-border);
+}
+
+.mantine-body {
+  background-color: var(--mantine-color-body);
+}
+
+.app-header {
+    @apply relative flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-4 mantine-body mantine-border border-b
+}
+
+.app-navbar {
+    @apply max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between
+}

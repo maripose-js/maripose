@@ -22,7 +22,7 @@ export interface MariposeConfig {
   /**
    * Assets directory
    */
-  assetsDir: string;
+  publicDir: string;
 
   /**
    * Directory to build to
@@ -137,6 +137,11 @@ export type LogoOptions = {
    * Override default href
    */
   href?: string;
+
+  /**
+   * Text displayed with the logo
+   */
+  text?: string;
 };
 
 export const resolveConfig = async (
@@ -147,6 +152,7 @@ export const resolveConfig = async (
 ): Promise<MariposeConfig> => {
   const configFile = resolvePath(root, CONFIG_FILE);
   let userConfig: Partial<MariposeConfig> | undefined;
+  console.log("configFile", configFile);
 
   if (!fs.existsSync(configFile)) {
     throw new Error(`No config file found at ${CONFIG_FILE}`);
@@ -163,9 +169,9 @@ export const resolveConfig = async (
   const rootDir = path.isAbsolute(basicRoot)
     ? basicRoot
     : path.join(process.cwd(), basicRoot);
-  const assetsDir = path.isAbsolute(userConfig?.assetsDir || "")
-    ? userConfig?.assetsDir
-    : resolvePath(rootDir, userConfig?.assetsDir || "assets");
+  const publicDir = path.isAbsolute(userConfig?.publicDir || "")
+    ? userConfig?.publicDir
+    : resolvePath(rootDir, userConfig?.publicDir || "public");
   const buildDir = path.isAbsolute(userConfig?.buildDir || "")
     ? userConfig?.buildDir
     : resolvePath(rootDir, userConfig?.buildDir || "dist");
@@ -177,7 +183,7 @@ export const resolveConfig = async (
 
   return {
     root: rootDir,
-    assetsDir,
+    publicDir,
     buildDir,
     watch: userConfig?.watch ?? {},
     server: serverOptions,
@@ -185,7 +191,7 @@ export const resolveConfig = async (
       basePath: userConfig?.site?.basePath || "/",
       socialsLinks: userConfig?.site?.socialsLinks || [],
       navbarLinks: userConfig?.site?.navbarLinks || [],
-      logo: userConfig?.site?.logo || { dark: "", light: "" },
+      logo: userConfig?.site?.logo || { dark: "", light: "", name: "" },
       title: userConfig?.site?.title || "",
       description: userConfig?.site?.description || "",
       redirects: userConfig?.site?.redirects || {},

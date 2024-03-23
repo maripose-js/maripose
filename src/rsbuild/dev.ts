@@ -1,19 +1,17 @@
 import type { MariposeInstance } from "../context.ts";
-import { isProduction } from "std-env";
 import type { RsbuildConfig } from "@rsbuild/core";
 import type { ServerOptions } from "../server/http.ts";
 import type { MariposeConfig } from "../utils/config.ts";
 import path from "path";
 import { fileURLToPath } from "url";
-import { pluginMdx } from "./mdx-plugin.ts";
 import { virtualModules } from "./vm/vm.ts";
 import { createRouter } from "./router.ts";
-import * as fs from "fs-extra";
 
 const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
-export const PACKAGE_ROOT = path.join(dirname, "../..");
+const isProduction = process.env.NODE_ENV === "production";
 
+export const PACKAGE_ROOT = path.join(dirname, "../..");
 export const CLIENT_ENTRY = path.join(
   PACKAGE_ROOT,
   "dist",
@@ -21,7 +19,10 @@ export const CLIENT_ENTRY = path.join(
   "client.js"
 );
 
-export const rsDev = async (ctx: MariposeInstance, options: ServerOptions) => {
+export const rsBuildInstance = async (
+  ctx: MariposeInstance,
+  options: ServerOptions
+) => {
   const {
     default: { createRsbuild, mergeRsbuildConfig },
   } = await import("@rsbuild/core");
@@ -31,7 +32,7 @@ export const rsDev = async (ctx: MariposeInstance, options: ServerOptions) => {
 
   await router.init();
 
-  const rsBuildConfig = createRsbuildConfig(ctx.config!, options);
+  const rsBuildConfig = await createRsbuildConfig(ctx.config!, options);
   const rsbuild = await createRsbuild({
     rsbuildConfig: mergeRsbuildConfig(rsBuildConfig, ctx.config?.rsbuild!),
   });
@@ -42,16 +43,15 @@ export const rsDev = async (ctx: MariposeInstance, options: ServerOptions) => {
       router,
       config: ctx.config!,
     }),
-    pluginMdx(ctx.config!),
     pluginReact(),
   ]);
   return rsbuild;
 };
 
-export const createRsbuildConfig = (
+export const createRsbuildConfig = async (
   ctg: MariposeConfig,
   options: ServerOptions
-): RsbuildConfig => {
+): Promise<RsbuildConfig> => {
   const browserslist = {
     web: isProduction
       ? ["chrome >= 87", "edge >= 88", "firefox >= 78", "safari >= 14"]
@@ -63,11 +63,57 @@ export const createRsbuildConfig = (
     node: ["node >= 14"],
   };
 
+  const MDX_REGEXP = /\.(md|mdx)$/i;
   return {
+    tools: {
+      bundlerChain(chain, { CHAIN_ID }) {
+        const jsModuleRule = chain.module.rule(CHAIN_ID.RULE.JS);
+
+        const swcLoaderOptions = jsModuleRule
+          .use(CHAIN_ID.USE.SWC)
+          .get("options");
+
+        chain.module
+          .rule("MDX")
+          .type("javascript/auto")
+          .test(MDX_REGEXP)
+          .resolve.merge({
+            conditionNames: jsModuleRule.resolve.get("conditionNames"),
+            mainFields: jsModuleRule.resolve.mainFields.values(),
+          })
+          .end()
+          .oneOf("MDXCompile")
+          .use("builtin:swc-loader")
+          .loader("builtin:swc-loader")
+          .options(swcLoaderOptions)
+          .end()
+          .use("mdx-loader")
+          .loader(require.resolve("../../loader.cjs"))
+          .options(ctg);
+
+        if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
+          chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap((options) => {
+            options[0] ??= {};
+            options[0].include = [/\.([cm]js|[jt]sx?|flow)$/i, MDX_REGEXP];
+            return options;
+          });
+        }
+
+        chain.resolve.extensions.prepend(".md").prepend(".mdx").prepend(".mjs");
+      },
+      rspack: {
+        mode: "development",
+        optimization: {
+          sideEffects: false,
+          moduleIds: "named",
+          minimize: true,
+        },
+      },
+    },
     server: {
       ...options,
       publicDir: {
-        name: ctg?.assetsDir,
+        name: ctg?.publicDir,
       },
       printUrls: ({ urls }) => {
         return urls.map((url) => url);
@@ -75,6 +121,7 @@ export const createRsbuildConfig = (
     },
     dev: {
       progressBar: false,
+      startUrl: true,
     },
     output: {
       targets: ["web"],
@@ -83,10 +130,6 @@ export const createRsbuildConfig = (
       },
       overrideBrowserslist: browserslist,
       assetPrefix: "/",
-      minify: {
-        js: true,
-        css: true,
-      },
     },
     source: {
       entry: {
@@ -107,6 +150,13 @@ export const createRsbuildConfig = (
               priority: 99,
             },
           },
+          chunks: "all",
+          minSize: 30000,
+        },
+        strategy: "split-by-experience",
+        forceSplitting: {
+          mantine: /node_modules[\\/]@mantine/,
+          react: /node_modules[\\/]react/,
         },
       },
     },

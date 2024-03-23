@@ -2,17 +2,17 @@ import { createContext } from "../context.ts";
 import { resolveWatcherOptions } from "../watch.ts";
 import { getServerOptions } from "./http.ts";
 import chokidar from "chokidar";
-import { rsDev } from "../rsbuild/dev.ts";
+import { rsBuildInstance } from "../rsbuild/dev.ts";
 
 export const createDevServer = async (args: any) => {
   const createServer = async () => {
     const ctx = await createContext(args.root, "dev");
     const watcherOptions = resolveWatcherOptions(ctx.config);
     const options = await getServerOptions(ctx);
-    const builder = await rsDev(ctx, options);
+    const builder = await rsBuildInstance(ctx, options);
 
     const watcher = chokidar.watch(
-      [ctx.config?.root || "", ctx.config?.assetsDir || ""],
+      [ctx.config?.root || "", ctx.config?.publicDir || ""],
       watcherOptions
     );
 

@@ -19,9 +19,11 @@ export const cliArgs = {
 } as any;
 
 import { devCommand } from "./commands/dev.ts";
+import { buildCommand } from "./commands/build.ts";
 
 const main = async () => {
   const dev = devCommand(cliArgs);
+  const build = buildCommand(cliArgs);
   const main = defineCommand({
     meta: {
       name: "mari",
@@ -30,6 +32,7 @@ const main = async () => {
     },
     subCommands: {
       dev,
+      build,
     },
     run({ args }) {
       if (args._.length < 1) {

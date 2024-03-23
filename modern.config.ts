@@ -58,7 +58,7 @@ export default defineConfig({
         "virtual-custom-css",
       ],
       style: {
-        tailwindcss: { ...tailwindConfig },
+        tailwindcss: { ...tailwindConfig, darkMode: "class" },
       },
     },
   ],
