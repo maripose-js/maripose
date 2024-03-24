@@ -1,12 +1,15 @@
 import { matchRoutes, type Route } from "../../rsbuild/router.ts";
 import { routes, siteData } from "virtual-site-data";
-import type { PageData } from "../client.tsx";
+import type { PageData } from "../app.tsx";
 import { isSamePath } from "ufo";
-export const usePage = async (): Promise<PageData | undefined> => {
+export const usePage = async (
+  pathname: string
+  // navigate: (to: string) => void
+): Promise<PageData | undefined> => {
   let route: Route;
   let meta: any;
 
-  const _match = matchRoutes(routes, window.location.pathname);
+  const _match = matchRoutes(routes, pathname);
   const match = Array.isArray(_match) ? _match[0] : _match;
 
   if (match) {
@@ -18,7 +21,8 @@ export const usePage = async (): Promise<PageData | undefined> => {
         return isSamePath(from, match.route);
       })
     ) {
-      window.location.href = redirect;
+      //find a way to navigate in ssr
+      // navigate(redirect);
       return;
     }
     route = match;

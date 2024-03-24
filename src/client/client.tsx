@@ -1,46 +1,24 @@
-import React, { useEffect } from "react";
-import ReactDOM from "react-dom/client";
-import { usePage } from "./lib/usePage.ts";
-import { NotFound } from "./pages/not-found.tsx";
-import { Layout } from "./layout.tsx";
-import { HomePage } from "./pages/home-page.tsx";
-import type { Route } from "../rsbuild/router.ts";
-import "./globals.css";
+import { App } from "./app.tsx";
+import { BrowserRouter } from "react-router-dom";
 
-import { createHead, useHead } from "unhead";
+const el = document.getElementById("root")!;
 
-const head = createHead();
+const render = async () => {
+  const { createRoot, hydrateRoot } = await import("react-dom/client");
 
-export type PageData = {
-  meta: any;
-  route: Route | null;
-};
-
-const App = () => {
-  const [data, setData] = React.useState<PageData | null>(null);
-
-  useHead({
-    title: "My awesome site",
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const _data = await usePage();
-      if (_data) {
-        setData({ route: _data.route, meta: _data.meta });
-      }
-    };
-
-    void fetchData();
-  }, [window.location.pathname]);
-
-  const renderRoute = () => {
-    if (!data || !data.route) return <NotFound />;
-    if (data.route.route === "/") return <HomePage meta={data.meta} />;
-    return <>{data.route?.comp}</>;
+  const RouterApp = () => {
+    return (
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
   };
 
-  return <Layout>{renderRoute()}</Layout>;
+  if (process.env.NODE_ENV === "production") {
+    hydrateRoot(el, <RouterApp />);
+  } else {
+    createRoot(el).render(<RouterApp />);
+  }
 };
 
-ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
+void render();

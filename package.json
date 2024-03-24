@@ -7,9 +7,11 @@
   ],
   "scripts": {
     "dev": "modern build && bun --watch ./src/cli.ts dev --root ./cord-test",
+    "build:test": "modern build && bun ./src/cli.ts build --root ./cord-test",
     "build": "modern build"
   },
   "devDependencies": {
+    "@clack/prompts": "^0.7.0",
     "@modern-js/module-tools": "^2.48.2",
     "@modern-js/plugin-tailwindcss": "^2.48.3",
     "@types/fs-extra": "^11.0.4",
@@ -44,6 +46,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-lazy-with-preload": "^2.2.1",
+    "react-router-dom": "^6.22.3",
     "remark-gfm": "^4.0.0",
     "rspack-plugin-virtual-module": "^0.1.12",
     "ufo": "^1.5.2",

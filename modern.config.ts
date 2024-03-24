@@ -39,6 +39,7 @@ export default defineConfig({
     {
       input: {
         client: "./src/client/client.tsx",
+        server: "./src/client/server.tsx",
       },
       buildType: "bundle",
       format: "esm",

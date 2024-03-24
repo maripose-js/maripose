@@ -11,7 +11,7 @@ export const Navbar = () => {
         <nav className="app-navbar">
           <div className="flex items-center justify-between">
             <a
-              className="inline-flex items-center gap-x-2 text-xl font-semibold dark:text-white"
+              className="flex flex-row items-center gap-x-2 text-xl font-semibold dark:text-white"
               href={logo.href ? logo.href : "/"}
               target={logo.target ? logo.target : "_self"}
             >

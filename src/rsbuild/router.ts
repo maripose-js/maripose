@@ -67,6 +67,7 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
         )
         .join(",")}]`;
     },
+    routes,
   };
 };
 

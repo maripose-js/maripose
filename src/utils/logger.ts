@@ -4,8 +4,11 @@ type MessageInput = string | number | null | undefined;
 
 const prefix = (color: string) => {
   const date = new Date();
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const seconds = date.getSeconds().toString().padStart(2, "0");
   return (
-    pc.dim(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`) +
+    pc.dim(`${hours}:${minutes}:${seconds}`) +
     //@ts-ignore
     ` ${pc.bold(pc[color](`[maripose]`))}`
   );
@@ -20,6 +23,8 @@ export const createLogger = () => {
       console.error(`${prefix("red")} ${pc.dim(message)}`),
     info: (message: MessageInput) =>
       console.info(`${prefix("cyan")} ${pc.dim(message)}`),
+    success: (message: MessageInput) =>
+      console.log(`${prefix("green")} ${pc.dim(message)}`),
   };
 };
 

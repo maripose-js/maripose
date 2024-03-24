@@ -2,7 +2,7 @@ import { createContext } from "../context.ts";
 import { resolveWatcherOptions } from "../watch.ts";
 import { getServerOptions } from "./http.ts";
 import chokidar from "chokidar";
-import { rsBuildInstance } from "../rsbuild/dev.ts";
+import { rsBuildInstance } from "../rsbuild/rsbuild.ts";
 
 export const createDevServer = async (args: any) => {
   const createServer = async () => {

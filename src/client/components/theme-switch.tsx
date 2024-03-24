@@ -15,7 +15,7 @@ export const ThemeSwitch = () => {
         setTheme(colorScheme === "light" ? "dark" : "light");
       }}
       variant="default"
-      size="xl"
+      size="lg"
       aria-label="Toggle color scheme"
     >
       <SunIcon className={"dark:hidden block"} />

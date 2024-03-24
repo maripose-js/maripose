@@ -19,9 +19,17 @@ export const CLIENT_ENTRY = path.join(
   "client.js"
 );
 
+export const SERVER_ENTRY = path.join(
+  PACKAGE_ROOT,
+  "dist",
+  "client",
+  "server.js"
+);
+
 export const rsBuildInstance = async (
   ctx: MariposeInstance,
-  options: ServerOptions
+  options: ServerOptions,
+  buildOptions?: RsbuildConfig
 ) => {
   const {
     default: { createRsbuild, mergeRsbuildConfig },
@@ -32,9 +40,17 @@ export const rsBuildInstance = async (
 
   await router.init();
 
-  const rsBuildConfig = await createRsbuildConfig(ctx.config!, options);
+  const rsBuildConfig = await createRsbuildConfig(
+    ctx.config!,
+    options,
+    buildOptions
+  );
   const rsbuild = await createRsbuild({
-    rsbuildConfig: mergeRsbuildConfig(rsBuildConfig, ctx.config?.rsbuild!),
+    rsbuildConfig: mergeRsbuildConfig(
+      buildOptions ?? {},
+      rsBuildConfig,
+      ctx.config?.rsbuild!
+    ),
   });
 
   rsbuild.addPlugins([
@@ -50,8 +66,10 @@ export const rsBuildInstance = async (
 
 export const createRsbuildConfig = async (
   ctg: MariposeConfig,
-  options: ServerOptions
+  options: ServerOptions,
+  buildOptions: RsbuildConfig = {}
 ): Promise<RsbuildConfig> => {
+  const isSsr = buildOptions.output?.distPath?.["server"] !== undefined;
   const browserslist = {
     web: isProduction
       ? ["chrome >= 87", "edge >= 88", "firefox >= 78", "safari >= 14"]
@@ -106,7 +124,7 @@ export const createRsbuildConfig = async (
         optimization: {
           sideEffects: false,
           moduleIds: "named",
-          minimize: true,
+          minimize: !isSsr,
         },
       },
     },
@@ -119,12 +137,16 @@ export const createRsbuildConfig = async (
         return urls.map((url) => url);
       },
     },
+    html: {
+      title: ctg?.site?.title,
+      template: path.join(PACKAGE_ROOT, "index.html"),
+    },
     dev: {
       progressBar: false,
       startUrl: true,
     },
     output: {
-      targets: ["web"],
+      targets: isSsr ? ["node"] : ["web"],
       distPath: {
         root: ctg?.buildDir,
       },
@@ -133,7 +155,7 @@ export const createRsbuildConfig = async (
     },
     source: {
       entry: {
-        index: CLIENT_ENTRY,
+        index: isSsr ? SERVER_ENTRY : CLIENT_ENTRY,
       },
       include: [`${process.cwd() + "\\node_modules\\.maripose\\runtime"}`],
     },
@@ -156,7 +178,6 @@ export const createRsbuildConfig = async (
         strategy: "split-by-experience",
         forceSplitting: {
           mantine: /node_modules[\\/]@mantine/,
-          react: /node_modules[\\/]react/,
         },
       },
     },
