@@ -8,5 +8,15 @@ export default defineConfig({
       dark: "logo.png",
       text: "Maripose",
     },
+    navbarLinks: [
+      {
+        text: "Home",
+        link: "/",
+      },
+      {
+        text: "About",
+        link: "/about",
+      },
+    ],
   },
 });

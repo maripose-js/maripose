@@ -1,5 +1,5 @@
 import React from "react";
-import { AppShell, Burger } from "@mantine/core";
+import { AppShell, Text } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "virtual-custom-css";
 import { ThemeProvider } from "next-themes";
@@ -8,6 +8,8 @@ import { Navbar } from "./components/navbar.tsx";
 
 const theme = createTheme({
   defaultRadius: "lg",
+  primaryColor: "orange",
+  autoContrast: true,
 });
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -15,7 +17,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <MantineProvider theme={theme} defaultColorScheme={"dark"}>
         <AppShell header={{ height: 60 }} padding="md">
-          <AppShell.Header>
+          <AppShell.Header className={"!border-none"}>
             <Navbar />
           </AppShell.Header>
 

@@ -2,18 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
-.mantine-border {
+.dark, :root[data-mantine-color-scheme="dark"] {
+    --mantine-color-body: rgb(23, 23, 23) !important;
+    --mantine-color-default: rgb(35 35 35) !important;
+    --mantine-color-default-hover: rgb(30 30 30) !important;
+    --mantine-color-default-border: rgb(40, 40, 40) !important;
+    --mantine-color-text: rgba(255, 255, 245, .86) !important
+}
+
+.body {
+    background-color: rgb(var(--mantine-color-body) / 1) !important;
+}
+
+.mp-mantine-border {
   border-color: var(--mantine-color-default-border);
 }
 
-.mantine-body {
+.mp-mantine-body {
   background-color: var(--mantine-color-body);
 }
 
-.app-header {
-    @apply relative flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-4 mantine-body mantine-border border-b
+.mp-mantine-body-75 {
+    background-color: rgb(var(--mantine-color-body) / .75);
 }
 
-.app-navbar {
-    @apply max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between
+.mp-mantine-text {
+    color: var(--mantine-color-text);
+}
+
+.mantine-Text-root {
+    color: var(--mantine-color-text);
+}
+
+.mp-mantine-hover {
+    color: var(--mantine-color-default-hover);
+}
+
+.mp-app-header {
+    @apply relative flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-4 mp-mantine-body-75 mp-mantine-border border-b
+}
+
+.mp-app-navbar {
+    @apply max-w-[85rem] w-full mx-auto px-4
+}
+
+.mp-navbar-logo {
+    @apply flex flex-row items-center gap-x-2 text-xl font-semibold dark:text-white
+}
+
+.mp-logo-image {
+    @apply w-8 h-auto
+}
+
+/*TODO: add animation*/
+.mp-collapse-box {
+    @apply ease-in-out border-b z-[100] mp-mantine-border shadow-xl mp-mantine-body rounded-b-md sm:hidden w-full h-full fixed top-[calc(3.75rem*var(--mantine-scale))] max-h-[calc(100vh-3.75rem*var(--mantine-scale))]
+}
+
+.mp-collapse-box-opened {
+    @apply opacity-100 h-auto
+}
+
+.mp-collapse-box-closed {
+    @apply opacity-0 h-0 hidden overflow-hidden
+}
+
+.mp-nav-link {
+    @apply pb-[8px] pt-[4px] w-full transition-[color_.25s] hover:text-amber-500 active:text-amber-500
+}
+
+.mp-nav-link-not-collapsed {
+    @apply hidden sm:block
+}
+
+.mp-nav-link-border {
+    @apply border-b mp-mantine-border
+}
+
+.mp-nav-link-borderless {
+    @apply !p-[5px_12px]
+}
+
+.mp-collapse-box-inner {
+    @apply w-full h-full p-4 px-[3rem] flex mt-10
+}
+
+.mp-collapse-box-links {
+    @apply flex flex-col gap-2 w-full
+}
+
+.mp-navbar-links {
+    @apply flex flex-row gap-2 w-full
+}
+
+.mp-navbar-inner {
+    @apply flex items-center justify-between
 }

@@ -143,7 +143,6 @@ export const createRsbuildConfig = async (
     },
     dev: {
       progressBar: false,
-      startUrl: true,
     },
     output: {
       targets: isSsr ? ["node"] : ["web"],

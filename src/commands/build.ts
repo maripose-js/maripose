@@ -77,7 +77,7 @@ export const buildCommand = (sharedArgs: any) =>
 
               const page = htmlTemplate
                 .toString()
-                .replace("__INJECT_BODY__", html);
+                .replace("<!--__INJECT_BODY__-->", html);
 
               const fileName =
                 (route.route === "/" ? "index" : route.route) + ".html";
