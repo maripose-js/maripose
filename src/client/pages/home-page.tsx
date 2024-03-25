@@ -1,11 +1,9 @@
-import { Button } from "@mantine/core";
+import { Icon } from "@iconify-icon/react";
 
 export const HomePage = ({ meta }: { meta: any }) => {
   return (
     <div>
-      <Button variant="filled" radius="lg">
-        Button
-      </Button>
+      <Icon icon={"simple-icons:github"} />
     </div>
   );
 };

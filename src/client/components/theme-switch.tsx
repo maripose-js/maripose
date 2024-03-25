@@ -1,6 +1,6 @@
 import { ActionIcon, useMantineColorScheme } from "@mantine/core";
 import { useTheme } from "next-themes";
-import { MoonIcon, SunIcon } from "./icons";
+import { IconBase } from "./icons/base.tsx";
 
 export const ThemeSwitch = () => {
   const { colorScheme, setColorScheme } = useMantineColorScheme({
@@ -18,8 +18,8 @@ export const ThemeSwitch = () => {
       size="lg"
       aria-label="Toggle color scheme"
     >
-      <SunIcon className={"dark:hidden block"} />
-      <MoonIcon className={"dark:block hidden"} />
+      <IconBase icon={"tabler:moon"} className={"dark:hidden block"} />
+      <IconBase icon={"tabler:sun"} className={"dark:block hidden"} />
     </ActionIcon>
   );
 };

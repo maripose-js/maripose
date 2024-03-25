@@ -1,25 +1,28 @@
-import { type ComponentProps } from "react";
+import React, { type ComponentProps } from "react";
+import { Icon } from "@iconify-icon/react";
 
-export type IconProps = ComponentProps<"svg"> & {
+export type IconProps = ComponentProps<typeof Icon> & {
   size?: keyof typeof sizes;
 };
 
 const sizes = {
-  3: "w-3 h-3",
-  4: "w-4 h-4",
-  5: "w-5 h-5",
-  6: "w-6 h-6",
-  7: "w-7 h-7",
-  8: "w-8 h-8",
-  14: "w-14 h-14",
+  3: "12px",
+  4: "16px",
+  5: "20px",
+  6: "24px",
+  7: "28px",
+  8: "32px",
+  14: "56px",
 };
 
-export const IconSvg = ({ size = 5, className, ...props }: IconProps) => {
+export const IconBase = ({
+  size = 5,
+  className,
+  name,
+  ...props
+}: IconProps) => {
+  const { mode, ...rest } = props;
   return (
-    <svg
-      className={`${sizes[size]} inline-block shrink-0 text-current align-middle ${className}`}
-      fill="none"
-      {...props}
-    />
+    <Icon className={className} {...rest} style={{ fontSize: sizes[size] }} />
   );
 };
