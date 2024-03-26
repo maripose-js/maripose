@@ -5,11 +5,8 @@ import { HomePage } from "./pages/home-page.tsx";
 import type { Route } from "../rsbuild/router.ts";
 import "./globals.css";
 
-import { createHead, useHead } from "unhead";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
-const head = createHead();
 
 export type PageData = {
   meta: any;
@@ -19,10 +16,6 @@ export type PageData = {
 export const App = () => {
   const [data, setData] = React.useState<PageData | null>(null);
   const location = useLocation();
-
-  useHead({
-    title: "My awesome site",
-  });
 
   useEffect(() => {
     const fetchData = async () => {

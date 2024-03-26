@@ -98,3 +98,11 @@
 .mp-navbar-inner {
     @apply flex items-center justify-between
 }
+
+.mp-mantine-body-light {
+    @apply bg-[var(--mantine-primary-color-light)]
+}
+
+.mp-mantine-text-light {
+    @apply text-[var(--mantine-primary-color-light-color)]
+}

@@ -16,12 +16,12 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <MantineProvider theme={theme} defaultColorScheme={"dark"}>
-        <AppShell header={{ height: 60 }} padding="md">
+        <AppShell header={{ height: 60 }} padding="sm">
           <AppShell.Header className={"!border-none"}>
             <Navbar />
           </AppShell.Header>
 
-          <AppShell.Main className={"mt-4"}>{children}</AppShell.Main>
+          <AppShell.Main className={"!pt-0 !mt-0"}>{children}</AppShell.Main>
         </AppShell>
       </MantineProvider>
     </ThemeProvider>

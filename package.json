@@ -51,7 +51,6 @@
     "remark-gfm": "^4.0.0",
     "rspack-plugin-virtual-module": "^0.1.12",
     "ufo": "^1.5.2",
-    "unhead": "^1.8.20",
     "unified": "^11.0.4",
     "unist-util-visit-children": "^3.0.0"
   }
