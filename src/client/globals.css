@@ -80,7 +80,7 @@
 }
 
 .mp-nav-link-borderless {
-    @apply !p-[5px_12px]
+    @apply !py-[5px] !pl-[8px] !pr-[3px]
 }
 
 .mp-collapse-box-inner {
@@ -89,6 +89,14 @@
 
 .mp-collapse-box-links {
     @apply flex flex-col gap-2 w-full
+}
+
+.mp-collapse-box-social-links {
+    @apply flex w-full flex-wrap justify-center my-2
+}
+
+.mp-navbar-social-links {
+    @apply flex-row hidden sm:flex
 }
 
 .mp-navbar-links {

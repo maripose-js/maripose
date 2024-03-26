@@ -1,5 +1,4 @@
 import { siteData } from "virtual-site-data";
-import { ThemeSwitch } from "./theme-switch.tsx";
 import {
   ActionIcon,
   Burger,
@@ -7,10 +6,13 @@ import {
   Group,
   Text,
   Box,
+  Divider,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import type { NavLink } from "../../utils/config.ts";
 import { NavbarLink } from "./nav-link.tsx";
+import { ThemeSwitch } from "./theme-switch.tsx";
+import { SocialIcon } from "./social-icon.tsx";
 
 export const Navbar = () => {
   const { logo } = siteData;
@@ -38,7 +40,7 @@ export const Navbar = () => {
               />
               <Text>{logo.text}</Text>
             </a>
-            <div className={"flex flex-row gap-2"}>
+            <div className={"flex flex-row gap-2 justify-between items-center"}>
               <div className={"mp-navbar-links"}>
                 {navbarLinks.map((link, index) => (
                   <NavbarLink
@@ -49,21 +51,33 @@ export const Navbar = () => {
                   />
                 ))}
               </div>
+              <Divider
+                orientation="vertical"
+                className={"!h-6 !self-center hidden sm:block"}
+              />
               <ThemeSwitch />
-              <Box maw={400} mx="auto">
-                <Group justify="center" mb={5}>
-                  <div className="sm:hidden">
-                    <ActionIcon variant="default" size="lg">
-                      <Burger
-                        opened={opened}
-                        onClick={toggle}
-                        aria-label="Toggle navigation"
-                        size={"sm"}
-                      />
-                    </ActionIcon>
-                  </div>
-                </Group>
-              </Box>
+              <div className="sm:hidden">
+                <ActionIcon variant="default" size="lg">
+                  <Burger
+                    opened={opened}
+                    onClick={toggle}
+                    aria-label="Toggle navigation"
+                    size={"sm"}
+                  />
+                </ActionIcon>
+              </div>
+              {socialsLinks.length > 0 ? (
+                <Divider
+                  orientation="vertical"
+                  className={"!h-6 !self-center hidden sm:block"}
+                />
+              ) : null}
+
+              <div className={"mp-navbar-social-links"}>
+                {socialsLinks.map((icon, index) => (
+                  <SocialIcon icon={icon} key={index} />
+                ))}
+              </div>
             </div>
           </div>
         </nav>
@@ -78,21 +92,12 @@ export const Navbar = () => {
             {navbarLinks.map((link, index) => (
               <NavbarLink link={link} border key={index} collapsed />
             ))}
-            {/*<div className={"flex flex-row gap-4"}>*/}
-            {/*{socialsLinks.map((link, index) => (*/}
-            {/*  <ActionIcon*/}
-            {/*    key={index}*/}
-            {/*    component={"a"}*/}
-            {/*    href={link.link}*/}
-            {/*    target={link.target}*/}
-            {/*    aria-label={link.alt}*/}
-            {/*    variant="default"*/}
-            {/*    size="lg"*/}
-            {/*  >*/}
-            {/*    {link.icon}*/}
-            {/*  </ActionIcon>*/}
-            {/*))}*/}
-            {/*</div>*/}
+
+            <div className={"mp-collapse-box-social-links"}>
+              {socialsLinks.map((icon, index) => (
+                <SocialIcon icon={icon} key={index} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

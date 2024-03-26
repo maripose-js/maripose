@@ -18,5 +18,19 @@ export default defineConfig({
         link: "/about",
       },
     ],
+    socialsLinks: [
+      {
+        icon: "github",
+        link: "https://github.com/malezjaa",
+      },
+      {
+        icon: "github",
+        link: "https://github.com/malezjaa",
+      },
+      {
+        icon: "github",
+        link: "https://github.com/malezjaa",
+      },
+    ],
   },
 });
