@@ -23,6 +23,10 @@ export const IconBase = ({
 }: IconProps) => {
   const { mode, ...rest } = props;
   return (
-    <Icon className={className} {...rest} style={{ fontSize: sizes[size] }} />
+    <Icon
+      className={className}
+      {...rest}
+      style={{ fontSize: sizes[size], ...rest.style }}
+    />
   );
 };

@@ -1,4 +1,4 @@
-import { ActionIcon, useMantineColorScheme } from "@mantine/core";
+import { ActionIcon, Switch, useMantineColorScheme } from "@mantine/core";
 import { useTheme } from "next-themes";
 import { IconBase } from "./icons/base.tsx";
 
@@ -9,17 +9,30 @@ export const ThemeSwitch = () => {
   const { setTheme } = useTheme();
 
   return (
-    <ActionIcon
-      onClick={() => {
-        setColorScheme(colorScheme === "light" ? "dark" : "light");
-        setTheme(colorScheme === "light" ? "dark" : "light");
+    <Switch
+      onChange={(event) => {
+        setColorScheme(event.currentTarget.checked ? "dark" : "light");
+        setTheme(event.currentTarget.checked ? "dark" : "light");
       }}
-      variant="default"
-      size="lg"
-      aria-label="Toggle color scheme"
-    >
-      <IconBase icon={"tabler:moon"} className={"dark:hidden block"} />
-      <IconBase icon={"tabler:sun"} className={"dark:block hidden"} />
-    </ActionIcon>
+      size="md"
+      classNames={{
+        track:
+          colorScheme === "dark"
+            ? "!bg-[var(--mantine-color-dark-6)] mp-switch-border"
+            : "",
+        thumb:
+          colorScheme === "dark"
+            ? "!bg-[var(--mantine-color-dark-5)] mp-switch-border"
+            : "",
+      }}
+      checked={colorScheme === "dark"}
+      thumbIcon={
+        colorScheme === "dark" ? (
+          <IconBase icon={"tabler:moon"} size={3} />
+        ) : (
+          <IconBase icon={"tabler:sun"} size={3} />
+        )
+      }
+    />
   );
 };

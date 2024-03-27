@@ -80,7 +80,7 @@
 }
 
 .mp-nav-link-borderless {
-    @apply !py-[5px] !pl-[8px] !pr-[3px]
+    @apply !py-[5px] !pl-[8px] !pr-[5px]
 }
 
 .mp-collapse-box-inner {
@@ -113,4 +113,8 @@
 
 .mp-mantine-text-light {
     @apply text-[var(--mantine-primary-color-light-color)]
+}
+
+.mp-switch-border {
+    border: calc(.0625rem* var(--mantine-scale)) solid var(--mantine-color-dark-4) !important;
 }
