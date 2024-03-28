@@ -18,18 +18,22 @@ export default defineConfig({
         link: "/about",
       },
     ],
-    socialsLinks: [
+    title: "Maripose",
+    description:
+      "A simple static site generator created using react, tailwind, rsbuild and bun. Create beautiful websites with ease.",
+    slogan: "A simple static site generator",
+    buttons: [
       {
-        icon: "github",
-        link: "https://github.com/malezjaa",
+        link: "/quick-start",
+        text: "Get started",
+        variant: "filled",
+        icon: "tabler:rocket",
       },
       {
-        icon: "github",
-        link: "https://github.com/malezjaa",
-      },
-      {
-        icon: "github",
-        link: "https://github.com/malezjaa",
+        link: "/docs",
+        text: "Learn more",
+        variant: "light",
+        icon: "tabler:book",
       },
     ],
   },

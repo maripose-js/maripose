@@ -7,9 +7,12 @@ import "./globals.css";
 
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import type { BentoGridItem } from "../utils/config.ts";
 
 export type PageData = {
-  meta: any;
+  meta: {
+    features: BentoGridItem[];
+  };
   route: Route | null;
 };
 
@@ -30,7 +33,7 @@ export const App = () => {
 
   const renderRoute = () => {
     if (!data || !data.route) return <NotFound />;
-    if (data.route.route === "/") return <HomePage meta={data.meta} />;
+    if (data.route.route === "/") return <HomePage data={data} />;
     return <>{data.route?.comp}</>;
   };
 

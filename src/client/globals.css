@@ -39,7 +39,7 @@
 }
 
 .mp-app-header {
-    @apply relative flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-4 mp-mantine-body-75 mp-mantine-border border-b
+    @apply relative flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm items-center mp-mantine-body-75 mp-mantine-border border-b h-full
 }
 
 .mp-app-navbar {
@@ -68,7 +68,7 @@
 }
 
 .mp-nav-link {
-    @apply pb-[8px] pt-[4px] w-full transition-[color_.25s] hover:text-amber-500 active:text-amber-500
+    @apply pb-[8px] pt-[4px] w-full transition-[color_.25s] hover:text-[var(--mantine-primary-color-filled)] active:text-[var(--mantine-primary-color-filled)]
 }
 
 .mp-nav-link-not-collapsed {
@@ -117,4 +117,40 @@
 
 .mp-switch-border {
     border: calc(.0625rem* var(--mantine-scale)) solid var(--mantine-color-dark-4) !important;
+}
+
+.mp-primary-text-color {
+    color: var(--mantine-primary-color-filled) !important;
+}
+
+.mp-home-buttons {
+    @apply flex items-center justify-center gap-x-6
+}
+
+.mp-home-wrapper {
+    @apply relative isolate px-6 pt-10 lg:px-8
+}
+
+.mp-home-title {
+    @apply mp-primary-text-color !text-5xl sm:!text-7xl tracking-tight
+}
+
+.mp-home-col {
+    @apply text-center gap-5 flex flex-col items-center
+}
+
+.mp-bento-grid {
+    @apply grid md:auto-rows-auto grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto mb-5 py-10
+}
+
+.mp-bento-grid-item {
+    @apply min-h-[11rem] z-[5] row-span-1 rounded-xl hover:shadow-xl transition duration-200 mp-card-bg dark:shadow-none p-4 mp-mantine-border border justify-between flex flex-col space-y-4
+}
+
+.mp-card-bg {
+    background: var(--mantine-color-default-hover);
+}
+
+.mp-footer {
+    @apply border-t mp-mantine-border mp-mantine-body flex flex-row justify-between items-center py-3 px-2 z-[10] relative
 }

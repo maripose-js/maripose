@@ -8,6 +8,7 @@ import type { ServerOptions } from "../server/http.ts";
 import { defu } from "defu";
 import type { PluggableList } from "unified";
 import type { RsbuildConfig } from "@rsbuild/core";
+import React from "react";
 
 export const CONFIG_FILE = "maripose.config.ts";
 export const resolvePath = (root: string, file: string) =>
@@ -68,10 +69,7 @@ export type SiteConfig = {
   /**
    * Links to your social media
    */
-  socialsLinks: {
-    icon: string;
-    link: string;
-  }[];
+  socialsLinks: SocialLink[];
 
   /**
    * Navbar links
@@ -107,14 +105,66 @@ export type SiteConfig = {
    * Path to your custom css file
    */
   styles: string | string[];
+
+  /**
+   * Text display under the title
+   */
+  slogan: string;
+
+  /**
+   * Home page buttons
+   */
+  buttons: HomeButton[];
+
+  /**
+   * Team page
+   *
+   * @default Disabled
+   */
+  teamPage?: {
+    members: TeamMember[];
+    enable: boolean;
+  };
+
+  /**
+   * Footer options
+   */
+  footer: FooterOptions;
 };
+
+export type SocialLink = {
+  icon: string;
+  link: string;
+};
+
+export type HomeButton = {
+  text: string;
+  icon?: IconType;
+  link: string;
+  target?: string;
+  variant:
+    | "default"
+    | "filled"
+    | "light"
+    | "outline"
+    | "subtle"
+    | "transparent"
+    | "white";
+};
+
+export type IconType =
+  | {
+      icon: string;
+      size: 2 | 3 | 4 | 5 | 6 | 7 | 8 | 14 | undefined;
+    }
+  | string;
 
 export type NavLink = {
   text: string;
   link: string;
   target?: string;
   rel?: string;
-  icon?: string;
+  icon?: IconType;
 };
 
 export type LogoOptions = {
@@ -147,6 +197,37 @@ export type LogoOptions = {
    * Target for the logo link
    */
   target?: string;
+};
+
+export type BentoGridItem = {
+  className?: string;
+  title?: string;
+  description?: string;
+  header?: string;
+  icon?: string;
+};
+
+export type TeamMember = {
+  name: string;
+  role: string;
+  description: string;
+  avatar: string;
+  socials?: SocialLink[];
+  sponsor?: string;
+};
+
+export type FooterOptions = {
+  /**
+   * Display social links from site config
+   *
+   * @default true
+   */
+  socials: boolean;
+
+  /**
+   * Text displayed in the footer
+   */
+  text: string;
 };
 
 export const resolveConfig = async (
@@ -201,6 +282,13 @@ export const resolveConfig = async (
       redirects: userConfig?.site?.redirects || {},
       anchors: userConfig?.site?.anchors || [],
       styles: userConfig?.site?.styles || [],
+      slogan: userConfig?.site?.slogan || "",
+      buttons: userConfig?.site?.buttons || [],
+      teamPage: userConfig?.site?.teamPage || { members: [], enable: false },
+      footer: userConfig?.site?.footer || {
+        socials: true,
+        text: "",
+      },
     },
   } as MariposeConfig;
 };

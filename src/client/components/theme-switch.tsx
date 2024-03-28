@@ -14,7 +14,7 @@ export const ThemeSwitch = () => {
         setColorScheme(event.currentTarget.checked ? "dark" : "light");
         setTheme(event.currentTarget.checked ? "dark" : "light");
       }}
-      size="md"
+      size="sm"
       classNames={{
         track:
           colorScheme === "dark"
@@ -22,15 +22,15 @@ export const ThemeSwitch = () => {
             : "",
         thumb:
           colorScheme === "dark"
-            ? "!bg-[var(--mantine-color-dark-5)] mp-switch-border"
+            ? "!bg-[var(--mantine-color-dark-3)] mp-switch-border"
             : "",
       }}
       checked={colorScheme === "dark"}
       thumbIcon={
         colorScheme === "dark" ? (
-          <IconBase icon={"tabler:moon"} size={3} />
+          <IconBase icon={"tabler:moon"} size={2} />
         ) : (
-          <IconBase icon={"tabler:sun"} size={3} />
+          <IconBase icon={"tabler:sun"} size={2} />
         )
       }
     />

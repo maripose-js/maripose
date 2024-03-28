@@ -6,6 +6,7 @@ export type IconProps = ComponentProps<typeof Icon> & {
 };
 
 const sizes = {
+  2: "8px",
   3: "12px",
   4: "16px",
   5: "20px",

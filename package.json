@@ -35,7 +35,9 @@
     "@rsbuild/plugin-react": "^0.5.1",
     "c12": "^1.9.0",
     "chokidar": "^3.6.0",
+    "clsx": "^2.1.0",
     "defu": "^6.1.4",
+    "framer-motion": "^11.0.22",
     "fs-extra": "^11.2.0",
     "globby": "^14.0.1",
     "gray-matter": "^4.0.3",
@@ -50,6 +52,7 @@
     "react-router-dom": "^6.22.3",
     "remark-gfm": "^4.0.0",
     "rspack-plugin-virtual-module": "^0.1.12",
+    "tailwind-merge": "^2.2.2",
     "ufo": "^1.5.2",
     "unified": "^11.0.4",
     "unist-util-visit-children": "^3.0.0"
