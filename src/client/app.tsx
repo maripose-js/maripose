@@ -4,15 +4,17 @@ import { Layout } from "./layout.tsx";
 import { HomePage } from "./pages/home-page.tsx";
 import type { Route } from "../rsbuild/router.ts";
 import "./globals.css";
-
 import React, { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import type { BentoGridItem } from "../utils/config.ts";
+import { DocPage } from "./pages/doc-page.tsx";
 
 export type PageData = {
   meta: {
     features: BentoGridItem[];
-  };
+    title: string;
+    description: string;
+  } | null;
   route: Route | null;
 };
 
@@ -34,8 +36,9 @@ export const App = () => {
   const renderRoute = () => {
     if (!data || !data.route) return <NotFound />;
     if (data.route.route === "/") return <HomePage data={data} />;
-    return <>{data.route?.comp}</>;
+    if (data.route.custom) return <>{data.route.comp}</>;
+    return <DocPage data={data} />;
   };
 
-  return <Layout>{renderRoute()}</Layout>;
+  return <Layout data={data!}>{renderRoute()}</Layout>;
 };

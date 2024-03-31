@@ -19,7 +19,9 @@ export const NavbarLink = ({
       target={link.target}
       rel={link.rel}
     >
-      <Text>{link.text}</Text>
+      <Text className={collapsed ? "!text-lg sm:!text-sm" : ""}>
+        {link.text}
+      </Text>
     </a>
   );
 };

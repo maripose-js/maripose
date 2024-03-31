@@ -4,6 +4,7 @@ import { remarkToc } from "./toc.ts";
 
 export const buildOptions = (config: any): ProcessorOptions => {
   return {
+    providerImportSource: "@mdx-js/react",
     remarkPlugins: [
       remarkGfm,
       remarkToc,

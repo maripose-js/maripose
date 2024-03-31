@@ -1,0 +1,80 @@
+.mp-primary-text-color {
+    color: var(--mantine-primary-color-filled) !important;
+}
+
+.markdown-body details,
+.markdown-body figcaption,
+.markdown-body figure {
+    display: block;
+}
+
+.markdown-body summary {
+    display: list-item;
+}
+
+.markdown-body [hidden] {
+    display: none !important;
+}
+
+.markdown-body abbr[title] {
+    border-bottom: none;
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+}
+
+.markdown-body b,
+.markdown-body strong {
+    font-weight: 600;
+}
+
+.markdown-body dfn {
+    font-style: italic;
+}
+
+.markdown-body mark {
+    background-color: rgba(187, 128, 9, 0.15);
+    color: #e6edf3;
+}
+
+.markdown-body small {
+    font-size: 90%;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+.markdown-body sub {
+    bottom: -0.25em;
+}
+
+.markdown-body sup {
+    top: -0.5em;
+}
+
+.markdown-body img {
+    border-style: none;
+    max-width: 100%;
+    box-sizing: content-box;
+    background-color: #0d1117;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+    font-family: monospace;
+    font-size: 1em;
+}
+
+.markdown-body figure {
+    margin: 1em 40px;
+}
+
+.markdown-body blockquote p {
+    @apply !py-0
+}

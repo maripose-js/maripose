@@ -10,6 +10,12 @@ export type RouteInput = {
   file: string;
   fullPath: string;
   tab: Tab;
+  custom?: boolean;
+  page?: {
+    title: string;
+    file: string;
+    icon?: string;
+  } | null;
 };
 
 export type Tab = {
@@ -31,18 +37,37 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
         ignore: ["**/.git/**", "**/node_modules/**"],
         cwd: routesDir,
       });
-
-      files.forEach((file) => {
-        const route = resolveRouteFromPath(file, ctx, routesDir);
-        routes.push({
-          file,
-          route: withLeadingSlash(route.path),
-          fullPath: path.join(routesDir, file),
-          tab: route.tab,
-        });
+      ctx.config?.site?.sidebar?.forEach((sidebarItem) => {
+        for (const page of sidebarItem.pages) {
+          const fullPath = path.join(routesDir, page.file);
+          routes.push({
+            page,
+            file: page.file,
+            route: withLeadingSlash(resolveRouteFromPath(page.file, ctx)),
+            fullPath,
+            tab: {
+              name: sidebarItem.group,
+              path: pt.join(routesDir, sidebarItem.group),
+            },
+            custom: false,
+          });
+        }
+      });
+      files.map((file) => {
+        if (resolveDefaultPages(routesDir, file, ctx)) {
+          routes.push({
+            file,
+            route: withLeadingSlash(resolveRouteFromPath(file, ctx)),
+            fullPath: path.join(routesDir, file),
+            tab: null,
+            custom: true,
+            page: null,
+          });
+        }
       });
     },
     generate: () => {
+      console.log(routes);
       return `import { createElement } from 'react'; import { lazyWithPreload } from "react-lazy-with-preload"; ${routes
         .map(
           (route, index) =>
@@ -63,7 +88,9 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
             }', preload: async () => { await R${index}.preload(); return import("${route.fullPath.replaceAll(
               "\\",
               "/"
-            )}") } }`
+            )}") }, custom: ${route.custom}, page: ${JSON.stringify(
+              route.page
+            )} }`
         )
         .join(",")}]`;
     },
@@ -71,42 +98,31 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
   };
 };
 
+const resolveDefaultPages = (
+  routesDir: string,
+  file: string,
+  ctx: MariposeInstance
+) => {
+  const pages = ["index.mdx", ...(ctx.config?.site?.pages ?? [])].map(
+    (file) => {
+      return path.join(routesDir, file).replaceAll("/", "\\");
+    }
+  );
+  const fullPath = path.join(routesDir, file).replaceAll("/", "\\");
+
+  return pages.some((page) => page === fullPath);
+};
+
 export const resolveRouteFromPath = (
   _path: string,
-  ctx: MariposeInstance,
-  routesDir: string
-): {
-  path: string;
-  tab: Tab;
-} => {
+  ctx: MariposeInstance
+): string => {
   const path = /index\.(mdx|md)$/.test(_path)
     ? _path
     : joinURL(ctx.config?.site?.basePath!, _path);
 
-  const segments = path.split("/");
-  const regex = /tab-([a-zA-Z0-9-]+)/;
-
-  for (const segment of segments) {
-    if (regex.test(segment)) {
-      return {
-        path: path
-          .replace(/\.[^.]+$/, "")
-          .replace("tab-", "")
-          .replaceAll("index", ""),
-        tab: {
-          name: segment.replace("tab-", ""),
-          path: pt.join(routesDir, segment),
-        },
-      };
-    }
-  }
-
-  return {
-    path: path.replace(/\.[^.]+$/, "").replaceAll("index", "/"),
-    tab: null,
-  };
+  return path.replace(/\.[^.]+$/, "").replaceAll("index", "/");
 };
-
 export const matchRoutes = (
   routes: Route[],
   pathname: string
@@ -124,9 +140,19 @@ export const matchRoutes = (
   return null;
 };
 
+export const matchSidebarItems = (sidebarItems: string[], pathname: string) => {
+  for (const item of sidebarItems) {
+    if (matchPath(item, pathname)) {
+      return item;
+    }
+  }
+
+  return null;
+};
+
 const matchPath = (routePath: string, targetPath: string): boolean => {
-  const routeSegments = routePath.split("/");
-  const targetSegments = targetPath.split("/");
+  const routeSegments = routePath.replace(/\/$/, "").split("/");
+  const targetSegments = targetPath.replace(/\/$/, "").split("/");
 
   if (routeSegments.length !== targetSegments.length) {
     return false;

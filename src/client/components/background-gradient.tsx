@@ -74,7 +74,7 @@ export const BackgroundGradientAnimation = ({
       <div className={cn("", className)}>{children}</div>
       <div
         className={cn(
-          "gradients-container h-full w-full blur-lg absolute left-0 bottom-1/5 -z-10 transform-gpu opacity-50",
+          "gradients-container h-full w-full blur-xl absolute left-0 bottom-1/5 -z-10 transform-gpu opacity-20",
           isSafari ? "blur-2xl" : "[filter:url(#blurMe)_blur(40px)]"
         )}
       >

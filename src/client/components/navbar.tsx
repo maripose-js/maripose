@@ -1,20 +1,15 @@
 import { siteData } from "virtual-site-data";
-import {
-  ActionIcon,
-  Burger,
-  useMantineColorScheme,
-  Group,
-  Text,
-  Box,
-  Divider,
-} from "@mantine/core";
+import { Burger, useMantineColorScheme, Divider, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import type { NavLink } from "../../utils/config.ts";
 import { NavbarLink } from "./nav-link.tsx";
 import { ThemeSwitch } from "./theme-switch.tsx";
 import { SocialIcon } from "./social-icon.tsx";
+import { ActionIcon } from "./action-icon.tsx";
+import { DocLinks } from "./docs/doc-links.tsx";
+import type { PageData } from "../app.tsx";
 
-export const Navbar = () => {
+export const Navbar = ({ data }: { data: PageData }) => {
   const { logo } = siteData;
   const navbarLinks: NavLink[] = siteData.navbarLinks;
   const socialsLinks = siteData.socialsLinks as {
@@ -35,10 +30,10 @@ export const Navbar = () => {
             >
               <img
                 className="mp-logo-image"
-                src={colorScheme === "dark" ? logo.dark : logo.light}
-                alt={logo.alt}
+                src={"/" + (colorScheme === "dark" ? logo.dark : logo.light)}
+                alt={logo.alt ?? "site logo"}
               />
-              <Text>{logo.text}</Text>
+              <Title order={3}>{logo.text}</Title>
             </a>
             <div className={"flex flex-row gap-2 justify-between items-center"}>
               <div className={"mp-navbar-links"}>
@@ -56,8 +51,8 @@ export const Navbar = () => {
                 className={"!h-6 !self-center hidden sm:block"}
               />
               <ThemeSwitch />
-              <div className="sm:hidden">
-                <ActionIcon variant="default" size="lg">
+              <div className="md:hidden h-full">
+                <ActionIcon>
                   <Burger
                     opened={opened}
                     onClick={toggle}
@@ -69,7 +64,7 @@ export const Navbar = () => {
               {socialsLinks.length > 0 ? (
                 <Divider
                   orientation="vertical"
-                  className={"!h-6 !self-center hidden sm:block"}
+                  className={"!h-6 !self-center hidden md:block"}
                 />
               ) : null}
 
@@ -98,6 +93,7 @@ export const Navbar = () => {
                 <SocialIcon icon={icon} key={index} />
               ))}
             </div>
+            {data ? <DocLinks currentRoute={data} /> : null}
           </div>
         </div>
       </div>

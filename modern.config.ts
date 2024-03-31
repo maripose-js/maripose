@@ -1,6 +1,6 @@
 import { moduleTools, defineConfig } from "@modern-js/module-tools";
 import { createRequire } from "module";
-import tailwindConfig from "./tailwind.config";
+import tailwindConfig from "./tailwind.config.ts";
 import path from "path";
 
 const require = createRequire(import.meta.url);

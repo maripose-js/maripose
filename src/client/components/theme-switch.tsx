@@ -18,11 +18,11 @@ export const ThemeSwitch = () => {
       classNames={{
         track:
           colorScheme === "dark"
-            ? "!bg-[var(--mantine-color-dark-6)] mp-switch-border"
+            ? "!bg-[var(--mantine-color-default-hover)] mp-switch-border"
             : "",
         thumb:
           colorScheme === "dark"
-            ? "!bg-[var(--mantine-color-dark-3)] mp-switch-border"
+            ? "!bg-[var(--mantine-color-dark-5)] mp-switch-border"
             : "",
       }}
       checked={colorScheme === "dark"}

@@ -97,11 +97,6 @@ export type SiteConfig = {
   redirects: Record<string, string>;
 
   /**
-   * Anchors showed on top of the sidebar
-   */
-  anchors: NavLink[];
-
-  /**
    * Path to your custom css file
    */
   styles: string | string[];
@@ -130,6 +125,37 @@ export type SiteConfig = {
    * Footer options
    */
   footer: FooterOptions;
+
+  /**
+   * Customize title and icon for each tab
+   */
+  tabSettings: {
+    [key: string]: TabSetting;
+  };
+
+  /**
+   * Customize sidebar links
+   */
+  sidebar: SidebarItem[];
+
+  /**
+   * Custom pages
+   */
+  pages: string[];
+};
+
+export type SidebarItem = {
+  group: string;
+  pages: {
+    title: string;
+    file: string;
+    icon?: string;
+  }[];
+};
+
+export type TabSetting = {
+  icon?: string;
+  title: string;
 };
 
 export type SocialLink = {
@@ -280,15 +306,30 @@ export const resolveConfig = async (
       title: userConfig?.site?.title || "",
       description: userConfig?.site?.description || "",
       redirects: userConfig?.site?.redirects || {},
-      anchors: userConfig?.site?.anchors || [],
       styles: userConfig?.site?.styles || [],
       slogan: userConfig?.site?.slogan || "",
-      buttons: userConfig?.site?.buttons || [],
+      buttons: userConfig?.site?.buttons || [
+        {
+          link: "/quick-start",
+          text: "Get started",
+          variant: "filled",
+          icon: "tabler:rocket",
+        },
+        {
+          link: "/docs",
+          text: "Learn more",
+          variant: "light",
+          icon: "tabler:book",
+        },
+      ],
       teamPage: userConfig?.site?.teamPage || { members: [], enable: false },
       footer: userConfig?.site?.footer || {
         socials: true,
         text: "",
       },
+      tabSettings: userConfig?.site?.tabSettings || {},
+      sidebar: userConfig?.site?.sidebar || [],
+      pages: userConfig?.site?.pages || [],
     },
   } as MariposeConfig;
 };

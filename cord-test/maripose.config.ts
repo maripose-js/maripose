@@ -36,5 +36,33 @@ export default defineConfig({
         icon: "tabler:book",
       },
     ],
+    tabSettings: {
+      guide: {
+        icon: "tabler:book",
+        title: "Guide",
+      },
+    },
+    sidebar: [
+      {
+        group: "guide",
+        pages: [
+          {
+            file: "guide/test.mdx",
+            title: "Guide test",
+          },
+        ],
+      },
+    ],
+    pages: ["about.mdx"],
+    socialsLinks: [
+      {
+        icon: "github",
+        link: "https://github.com/malezjaa",
+      },
+      {
+        icon: "twitter",
+        link: "https://twitter.com/malezjaa",
+      },
+    ],
   },
 });

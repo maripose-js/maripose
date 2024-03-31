@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "modern build && bun --watch ./src/cli.ts dev --root ./cord-test",
     "build:test": "modern build && bun ./src/cli.ts build --root ./cord-test",
-    "build": "modern build"
+    "build": "modern build",
+    "reset": "kms rmdir node_modules && kms del bun.lockb && bun install && bun dev"
   },
   "devDependencies": {
     "@clack/prompts": "^0.7.0",

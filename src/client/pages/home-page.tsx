@@ -11,7 +11,7 @@ export const HomePage = ({ data }: { data: PageData }) => {
     <div className="mp-home-wrapper">
       <div className="mx-auto max-w-2xl pt-32 sm:pt-48 pb-10 sm:pb-20 lg:pt-56">
         <div className="mp-home-col">
-          <Title size={"h1"} className={"mp-home-title"}>
+          <Title size={"h1"} className={"mp-home-title mp-text-shadow"}>
             {siteData.title}
           </Title>
           <Title size={"h2"} className={"!text-4xl"}>
@@ -33,9 +33,9 @@ export const HomePage = ({ data }: { data: PageData }) => {
           </div>
         </div>
       </div>
-      {data.meta.features.length > 0 ? (
+      {data.meta?.features.length! > 0 ? (
         <BentoGrid>
-          {data.meta.features.map((item, i) => (
+          {data.meta?.features.map((item, i) => (
             <BentoGridItem
               key={i}
               title={item.title}

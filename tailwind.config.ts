@@ -1,9 +1,14 @@
-/** @type {import('tailwindcss').Config} */
+import defaultTheme from "tailwindcss/defaultTheme";
+import type { Config } from "tailwindcss";
+
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx,html}"],
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Nunito", "sans-serif", ...defaultTheme.fontFamily.sans],
+      },
       animation: {
         first: "moveVertical 30s ease infinite",
         second: "moveInCircle 20s reverse infinite",
@@ -49,4 +54,4 @@ export default {
     },
   },
   plugins: [],
-};
+} as Config;
