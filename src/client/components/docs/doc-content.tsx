@@ -8,6 +8,7 @@ import { Hr } from "./comps/hr.tsx";
 import { Li, Ol, Ul } from "./comps/list.tsx";
 import { Blockquote } from "./comps/blockquote.tsx";
 import { Image } from "./comps/image.tsx";
+import { Callout } from "./comps/callout.tsx";
 
 export const DocContent = ({ data }: { data: PageData }) => {
   const Content = () => {
@@ -42,6 +43,7 @@ export const DocContent = ({ data }: { data: PageData }) => {
           blockquote: Blockquote,
           img: Image,
           pre: Pre,
+          Callout,
         }}
       >
         <Content />

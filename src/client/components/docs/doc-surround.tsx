@@ -12,7 +12,7 @@ export const DocSurround = ({ data }: { data: PageData }) => {
 
   return (
     <div className="w-full py-3 gap-5 grid md:grid-cols-2">
-      {prev && (
+      {prev ? (
         <Link to={prev.route}>
           <div className="px-6 py-8 mp-mantine-border border not-prose rounded-lg hover:bg-[hsl(var(--muted-foreground))]/50 cursor-pointer flex flex-row items-center justify-between">
             <IconBase
@@ -28,6 +28,8 @@ export const DocSurround = ({ data }: { data: PageData }) => {
             </div>
           </div>
         </Link>
+      ) : (
+        <div></div>
       )}
       {next && (
         <Link to={next.route}>
