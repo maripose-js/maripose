@@ -140,16 +140,6 @@ export const matchRoutes = (
   return null;
 };
 
-export const matchSidebarItems = (sidebarItems: string[], pathname: string) => {
-  for (const item of sidebarItems) {
-    if (matchPath(item, pathname)) {
-      return item;
-    }
-  }
-
-  return null;
-};
-
 const matchPath = (routePath: string, targetPath: string): boolean => {
   const routeSegments = routePath.replace(/\/$/, "").split("/");
   const targetSegments = targetPath.replace(/\/$/, "").split("/");

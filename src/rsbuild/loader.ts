@@ -22,14 +22,17 @@ export default async function mdxLoader(
     });
 
     const code = String(vFile);
+    //@ts-ignore
+    const meta = compiler.data("meta");
 
     const result = `const frontmatter = ${JSON.stringify(data)};
 ${code}
 MDXContent.__PAGE_META__ = {};
 
-MDXContent.__PAGE_META__["${encodeURIComponent(filePath)}"] = ${JSON.stringify(
-      data
-    )};
+MDXContent.__PAGE_META__["${encodeURIComponent(filePath)}"] = ${JSON.stringify({
+      ...meta,
+      ...data,
+    })};
 `;
 
     callback(null, result);

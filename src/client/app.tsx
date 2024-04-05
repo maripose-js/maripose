@@ -8,12 +8,14 @@ import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import type { BentoGridItem } from "../utils/config.ts";
 import { DocPage } from "./pages/doc-page.tsx";
+import type { TocItem } from "../rsbuild/mdx/toc.ts";
 
 export type PageData = {
   meta: {
-    features: BentoGridItem[];
+    features?: BentoGridItem[];
     title: string;
     description: string;
+    toc?: TocItem[];
   } | null;
   route: Route | null;
 };

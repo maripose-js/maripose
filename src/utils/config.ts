@@ -9,6 +9,7 @@ import { defu } from "defu";
 import type { PluggableList } from "unified";
 import type { RsbuildConfig } from "@rsbuild/core";
 import React from "react";
+import type { RehypeShikiOptions } from "@shikijs/rehype";
 
 export const CONFIG_FILE = "maripose.config.ts";
 export const resolvePath = (root: string, file: string) =>
@@ -46,7 +47,6 @@ export interface MariposeConfig {
   markdown: {
     remarkPlugins?: PluggableList;
     rehypePlugins?: PluggableList;
-    //TODO: add shiki options
   };
 
   /**
@@ -142,7 +142,20 @@ export type SiteConfig = {
    * Custom pages
    */
   pages: string[];
+
+  /**
+   * Code highlighting options
+   */
+  codeHighlighting: CodeHighlightingOptions;
 };
+
+export type CodeHighlightingOptions = {
+  /**
+   * Adds copy button to code blocks
+   * @default true
+   */
+  copyButton?: boolean;
+} & RehypeShikiOptions;
 
 export type SidebarItem = {
   group: string;
@@ -298,11 +311,12 @@ export const resolveConfig = async (
     buildDir,
     watch: userConfig?.watch ?? {},
     server: serverOptions,
+    markdown: userConfig?.markdown || {},
     site: {
       basePath: userConfig?.site?.basePath || "/",
       socialsLinks: userConfig?.site?.socialsLinks || [],
       navbarLinks: userConfig?.site?.navbarLinks || [],
-      logo: userConfig?.site?.logo || { dark: "", light: "", name: "" },
+      logo: defu(userConfig?.site?.logo, { dark: "", light: "", name: "" }),
       title: userConfig?.site?.title || "",
       description: userConfig?.site?.description || "",
       redirects: userConfig?.site?.redirects || {},
@@ -322,14 +336,21 @@ export const resolveConfig = async (
           icon: "tabler:book",
         },
       ],
-      teamPage: userConfig?.site?.teamPage || { members: [], enable: false },
-      footer: userConfig?.site?.footer || {
+      teamPage: defu(userConfig?.site?.teamPage, {
+        members: [],
+        enable: false,
+      }),
+      footer: defu(userConfig?.site?.footer, {
         socials: true,
         text: "",
-      },
+      }),
       tabSettings: userConfig?.site?.tabSettings || {},
       sidebar: userConfig?.site?.sidebar || [],
       pages: userConfig?.site?.pages || [],
+      codeHighlighting: defu(userConfig?.site?.codeHighlighting, {
+        copyButton: true,
+        theme: "andromeeda",
+      }),
     },
   } as MariposeConfig;
 };

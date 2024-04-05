@@ -78,3 +78,10 @@
 .markdown-body blockquote p {
     @apply !py-0
 }
+
+.markdown-body pre > code {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: inherit;
+}

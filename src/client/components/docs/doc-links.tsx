@@ -11,43 +11,45 @@ export const DocLinks = ({ currentRoute }: { currentRoute: PageData }) => {
   const currentRoutes = routes.filter(
     (e) => e.tab?.name === currentRoute.route?.tab?.name
   );
+  const groups = routes
+    .filter((e) => e.tab)
+    .map((e) => e.tab)
+    .filter((e, i) => {
+      return i === routes.findIndex((r) => r.tab?.name === e?.name);
+    }) as Route["tab"][];
 
   return (
     <div className={"sticky"}>
       <div className={"mp-doc-tabs"}>
-        {routes
-          .filter((e) => e.tab?.order !== null)
-          .map((_route, index) => {
-            const tabSetting = siteData.tabSettings[
-              _route.tab?.name as string
-            ] ?? {
-              icon: "tabler:question-mark",
-              title: capitalize(_route?.tab?.name ?? ""),
-            };
-            const isActive = currentGroup?.tab?.name === _route.tab?.name;
-            return _route.tab ? (
-              <Link
-                key={index}
-                className={`mp-doc-tab`}
-                to={currentRoutes[0] ? currentRoutes[0].route : "/"}
+        {groups.map((_route, index) => {
+          const tabSetting = siteData.tabSettings[_route?.name as string] ?? {
+            icon: "tabler:question-mark",
+            title: capitalize(_route?.name ?? ""),
+          };
+          const isActive = currentGroup?.tab?.name === _route?.name;
+          return _route ? (
+            <Link
+              key={index}
+              className={`mp-doc-tab`}
+              to={currentRoutes[0] ? currentRoutes[0].route : "/"}
+            >
+              <div
+                className={`rounded-lg ${
+                  isActive ? `mp-doc-active-tab` : "mp-card-bg"
+                } mp-mantine-border border p-1 justify-center flex items-center text-black`}
               >
-                <div
-                  className={`rounded-lg ${
-                    isActive ? `mp-doc-active-tab` : "mp-card-bg"
-                  } mp-mantine-border border p-1 justify-center flex items-center text-black`}
-                >
-                  <IconBase icon={tabSetting.icon} size={4} />
-                </div>
-                <Text
-                  c={"dimmed"}
-                  size={"md"}
-                  className={isActive ? "mp-doc-active-text" : ""}
-                >
-                  {tabSetting.title}
-                </Text>
-              </Link>
-            ) : null;
-          })}
+                <IconBase icon={tabSetting.icon} size={4} />
+              </div>
+              <Text
+                c={"dimmed"}
+                size={"md"}
+                className={isActive ? "mp-doc-active-text" : ""}
+              >
+                {tabSetting.title}
+              </Text>
+            </Link>
+          ) : null;
+        })}
       </div>
 
       <Divider variant="dotted" />
@@ -63,7 +65,7 @@ export const DocLinks = ({ currentRoute }: { currentRoute: PageData }) => {
               <Link
                 key={index}
                 to={route.route}
-                className={`mp-doc-link ${
+                className={`mp-doc-link ${index !== 0 ? "mt-2.5" : ""} ${
                   isActive ? "mp-doc-active-link" : ""
                 }`}
               >

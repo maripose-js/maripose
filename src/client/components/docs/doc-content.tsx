@@ -3,7 +3,7 @@ import { MDXProvider } from "@mdx-js/react";
 import "./markdown-styles.css";
 import { H1, H2, H3, H4, H5, H6 } from "./comps/title.tsx";
 import { Suspense } from "react";
-import { Code } from "./comps/code.tsx";
+import { Code, Pre } from "./comps/code.tsx";
 import { Hr } from "./comps/hr.tsx";
 import { Li, Ol, Ul } from "./comps/list.tsx";
 import { Blockquote } from "./comps/blockquote.tsx";
@@ -41,6 +41,7 @@ export const DocContent = ({ data }: { data: PageData }) => {
           ol: Ol,
           blockquote: Blockquote,
           img: Image,
+          pre: Pre,
         }}
       >
         <Content />

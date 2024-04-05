@@ -50,6 +50,10 @@ export default defineConfig({
             file: "guide/test.mdx",
             title: "Guide test",
           },
+          {
+            file: "quick-start.mdx",
+            title: "Quick start",
+          },
         ],
       },
     ],
@@ -64,5 +68,8 @@ export default defineConfig({
         link: "https://twitter.com/malezjaa",
       },
     ],
+    codeHighlighting: {
+      theme: "vitesse-dark",
+    },
   },
 });
