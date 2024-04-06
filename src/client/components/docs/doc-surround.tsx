@@ -1,4 +1,4 @@
-import type { PageData } from "../../app.tsx";
+import type { PageData } from "@/app.tsx";
 import { IconBase } from "../icons/base.tsx";
 import { Text } from "@mantine/core";
 import { routes as _routes } from "virtual-site-data";

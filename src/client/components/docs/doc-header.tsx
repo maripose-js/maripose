@@ -1,4 +1,4 @@
-import type { PageData } from "../../app.tsx";
+import type { PageData } from "@/app.tsx";
 import { Text, Title } from "@mantine/core";
 
 export const DocHeader = ({ data }: { data: PageData }) => {

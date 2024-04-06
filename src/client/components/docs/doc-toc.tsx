@@ -1,11 +1,6 @@
-import type { PageData } from "../../app.tsx";
+import type { PageData } from "@/app.tsx";
 import { Title } from "@mantine/core";
-import React, {
-  type Dispatch,
-  type SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import React, { type Dispatch, type SetStateAction, useState } from "react";
 
 const useIntersectionObserver = (
   setActiveId: Dispatch<SetStateAction<string>>,

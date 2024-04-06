@@ -1,9 +1,9 @@
-import { globby } from "globby";
 import { joinURL, withLeadingSlash } from "ufo";
 import path from "path";
 import pt from "path";
 import type { MariposeInstance } from "../context.ts";
 import React from "react";
+import { Glob } from "bun";
 
 export type RouteInput = {
   route: string;
@@ -33,10 +33,11 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
 
   return {
     init: async () => {
-      const files = await globby("**/*.{mdx,md}", {
-        ignore: ["**/.git/**", "**/node_modules/**"],
+      const glob = new Glob("*.{mdx,md}");
+      const files = glob.scan({
         cwd: routesDir,
       });
+
       ctx.config?.site?.sidebar?.forEach((sidebarItem) => {
         for (const page of sidebarItem.pages) {
           const fullPath = path.join(routesDir, page.file);
@@ -53,7 +54,7 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
           });
         }
       });
-      files.map((file) => {
+      for await (const file of files) {
         if (resolveDefaultPages(routesDir, file, ctx)) {
           routes.push({
             file,
@@ -64,7 +65,7 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
             page: null,
           });
         }
-      });
+      }
     },
     generate: () => {
       console.log(routes);

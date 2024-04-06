@@ -9,6 +9,7 @@ export default {
       fontFamily: {
         sans: ["Nunito", "sans-serif", ...defaultTheme.fontFamily.sans],
       },
+
       animation: {
         first: "moveVertical 30s ease infinite",
         second: "moveInCircle 20s reverse infinite",

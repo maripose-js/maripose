@@ -12,19 +12,9 @@ const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 const isProduction = process.env.NODE_ENV === "production";
 
 export const PACKAGE_ROOT = path.join(dirname, "../..");
-export const CLIENT_ENTRY = path.join(
-  PACKAGE_ROOT,
-  "dist",
-  "client",
-  "client.js"
-);
+export const CLIENT_ENTRY = path.join(PACKAGE_ROOT, "dist", "client.js");
 
-export const SERVER_ENTRY = path.join(
-  PACKAGE_ROOT,
-  "dist",
-  "client",
-  "server.js"
-);
+export const SERVER_ENTRY = path.join(PACKAGE_ROOT, "dist", "server.js");
 
 export const rsBuildInstance = async (
   ctx: MariposeInstance,

@@ -1,6 +1,5 @@
 import React, { memo, useState } from "react";
 import { ActionIcon } from "./action-icon.tsx";
-import { useDebouncedState } from "@mantine/hooks";
 import { IconBase } from "./icons/base.tsx";
 
 export const CopyButton = memo(

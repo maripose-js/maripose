@@ -6,16 +6,15 @@
     "dist"
   ],
   "scripts": {
-    "dev": "modern build && bun --watch ./src/cli.ts dev --root ./cord-test",
-    "build:test": "modern build && bun ./src/cli.ts build --root ./cord-test",
-    "build": "modern build",
+    "dev": "tsup && bun --watch ./src/cli.ts dev --root ./cord-test",
+    "build:test": "tsup && bun ./src/cli.ts build --root ./cord-test",
+    "build": "tsup",
     "reset": "kms rmdir node_modules && kms del bun.lockb && bun install && bun dev"
   },
   "devDependencies": {
     "@clack/prompts": "^0.7.0",
     "@iconify-icon/react": "^2.0.1",
-    "@modern-js/module-tools": "^2.48.2",
-    "@modern-js/plugin-tailwindcss": "^2.48.3",
+    "@types/bun": "^1.0.12",
     "@types/fs-extra": "^11.0.4",
     "@types/react": "^18.2.62",
     "@types/react-dom": "^18.2.19",
@@ -26,6 +25,7 @@
     "postcss-preset-mantine": "^1.13.0",
     "postcss-simple-vars": "^7.0.1",
     "tailwindcss": "^3.4.1",
+    "tsup": "^8.0.2",
     "typescript": "^5.4.3"
   },
   "dependencies": {
@@ -42,13 +42,11 @@
     "framer-motion": "^11.0.22",
     "fs-extra": "^11.2.0",
     "github-slugger": "^2.0.0",
-    "globby": "^14.0.1",
     "gray-matter": "^4.0.3",
     "hast": "^1.0.0",
     "hookable": "^5.5.3",
     "next-themes": "^0.3.0",
     "pathe": "^1.1.2",
-    "picocolors": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-lazy-with-preload": "^2.2.1",

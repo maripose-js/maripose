@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { Divider, Text } from "@mantine/core";
-import { capitalize } from "../../lib/utils.ts";
+import { capitalize } from "@/lib/utils.ts";
 import { IconBase } from "../icons/base.tsx";
 import { routes, siteData } from "virtual-site-data";
-import type { PageData } from "../../app.tsx";
+import type { PageData } from "@/app.tsx";
 import { type Route } from "../../../rsbuild/router.ts";
 
 export const DocLinks = ({ currentRoute }: { currentRoute: PageData }) => {

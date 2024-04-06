@@ -2,7 +2,7 @@ import type { PageData } from "../../app.tsx";
 import { MDXProvider } from "@mdx-js/react";
 import "./markdown-styles.css";
 import { H1, H2, H3, H4, H5, H6 } from "./comps/title.tsx";
-import { Suspense } from "react";
+import { type CSSProperties, Suspense } from "react";
 import { Code, Pre } from "./comps/code.tsx";
 import { Hr } from "./comps/hr.tsx";
 import { Li, Ol, Ul } from "./comps/list.tsx";
@@ -16,7 +16,14 @@ export const DocContent = ({ data }: { data: PageData }) => {
   };
 
   return (
-    <div className={"pt-3 markdown-body"}>
+    <div
+      className={"pt-3 markdown-body"}
+      style={
+        {
+          "--mp-link-color": "var(--mantine-primary-color-filled)",
+        } as CSSProperties
+      }
+    >
       <MDXProvider
         components={{
           h1: H1,
@@ -31,7 +38,7 @@ export const DocContent = ({ data }: { data: PageData }) => {
           a: (props) => (
             <a
               className={
-                "bg-transparent hover:underline no-underline mp-primary-text-color"
+                "bg-transparent hover:underline no-underline !text-[var(--mp-link-color)]"
               }
               {...props}
             />
