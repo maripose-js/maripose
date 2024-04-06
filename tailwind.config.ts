@@ -54,22 +54,5 @@ export default {
       },
     },
   },
-  safelist: [
-    {
-      pattern:
-        /^(bg-(?:red|orange|yellow|lime|green|sky|blue)-(?:50|100|200|300|400|500|600|700|800|900|950)(?:\/[1-9][0-9]*)?)$/,
-      variants: ["dark"],
-    },
-    {
-      pattern:
-        /^(text-(?:red|orange|yellow|lime|green|sky|blue)-(?:50|100|200|300|400|500|600|700|800|900|950)(?:\/[1-9][0-9]*)?)$/,
-      variants: ["dark"],
-    },
-    {
-      pattern:
-        /^(border-(?:red|orange|yellow|lime|green|sky|blue)-(?:50|100|200|300|400|500|600|700|800|900|950)(?:\/[1-9][0-9]*)?)$/,
-      variants: ["dark"],
-    },
-  ],
   plugins: [],
 } as Config;

@@ -22,9 +22,7 @@ export const DocSurround = ({ data }: { data: PageData }) => {
             />
             <div className="text-right">
               <Text c="dimmed">previous</Text>
-              <Text className="!font-bold !text-white !text-lg">
-                {prev.page.title}
-              </Text>
+              <Text className="!font-bold !text-lg">{prev.page.title}</Text>
             </div>
           </div>
         </Link>
@@ -36,9 +34,7 @@ export const DocSurround = ({ data }: { data: PageData }) => {
           <div className="px-6 py-8 mp-mantine-border border not-prose rounded-lg hover:bg-[hsl(var(--muted-foreground))]/50 cursor-pointer flex flex-row items-center justify-between">
             <div className="text-left">
               <Text c="dimmed">Next</Text>
-              <Text className="!font-bold !text-white !text-lg">
-                {next.page.title}
-              </Text>
+              <Text className="!font-bold !text-lg">{next.page.title}</Text>
             </div>
             <IconBase
               icon="tabler:arrow-right"
