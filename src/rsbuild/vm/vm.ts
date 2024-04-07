@@ -21,7 +21,7 @@ export function virtualModules(ctx: VmCtx): RsbuildPlugin {
           Object.assign(runtimeModule, moduleResult);
         }
 
-        bundlerChain.plugin("rspress-runtime-module").use(
+        bundlerChain.plugin("virtual-modules").use(
           //@ts-ignore
           new RspackVirtualModulePlugin(runtimeModule, ctx.tempDir)
         );
