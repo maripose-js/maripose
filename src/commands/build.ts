@@ -7,11 +7,9 @@ import { rsBuildInstance } from "../rsbuild/rsbuild.ts";
 import fs from "fs-extra";
 import path from "path";
 import { createRouter } from "../rsbuild/router.ts";
-import type { PageData } from "../client/app.tsx";
+import type { PageData } from "@/app.tsx";
 import pc from "picocolors";
 import { formatBytes, formatTime } from "../utils/helpers.ts";
-import { globby } from "globby";
-import * as zlib from "zlib";
 
 const originalConsoleLog = console.log;
 

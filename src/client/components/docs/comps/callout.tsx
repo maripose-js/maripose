@@ -2,6 +2,7 @@ import { IconBase } from "../../icons/base.tsx";
 import React from "react";
 import colors from "tailwindcss/colors";
 import { type ColorKey, hexToRgb } from "@/lib/color.ts";
+import { Link, type LinkProps } from "react-router-dom";
 
 export type CalloutType =
   | "tip"
@@ -25,11 +26,13 @@ export const Callout = ({
   children,
   link,
   icon,
+  target = "_blank",
 }: {
   type: CalloutType;
   children: React.ReactNode;
   link?: string;
   icon?: string;
+  target: LinkProps["target"];
 }) => {
   const colorKey = calloutConfig[type].color as ColorKey;
   const isLink = link !== undefined && type === "link";
@@ -42,16 +45,17 @@ export const Callout = ({
     "--mp-text-dark-color": colors?.[colorKey][200],
     "--mp-link-color": colors?.[colorKey][500],
   } as React.CSSProperties;
+  const props = {
+    className: `mp-callout-${type} overflow-hidden border pl-4 pr-6 py-3 my-5 last:mb-0 rounded-xl bg-[var(--mp-callout-light-bg)] dark:bg-[var(--mp-callout-dark-bg)] ${
+      isLink
+        ? "border-dashed cursor-pointer mp-mantine-border hover:dark:border-[var(--mp-callout-dark-border)] hover:border-[var(--mp-callout-light-border)] hover:border-solid"
+        : "dark:border-[var(--mp-callout-dark-border)] border-[var(--mp-callout-light-border)]"
+    }`,
+    style: style,
+  };
 
-  return (
-    <div
-      className={`mp-callout-${type} overflow-hidden border pl-4 pr-6 py-3 my-5 last:mb-0 rounded-xl bg-[var(--mp-callout-light-bg)] dark:bg-[var(--mp-callout-dark-bg)] ${
-        isLink
-          ? "border-dashed cursor-pointer mp-mantine-border hover:dark:border-[var(--mp-callout-dark-border)] hover:border-[var(--mp-callout-light-border)] hover:border-solid"
-          : "dark:border-[var(--mp-callout-dark-border)] border-[var(--mp-callout-light-border)]"
-      }`}
-      style={style}
-    >
+  const content = (
+    <div {...props}>
       <div className={`flex flex-row items-center gap-2 prose font-semibold`}>
         <IconBase
           icon={icon ? icon : calloutConfig[type].icon}
@@ -61,5 +65,13 @@ export const Callout = ({
         <div className={"[&>p]:!py-0"}>{children}</div>
       </div>
     </div>
+  );
+
+  return isLink ? (
+    <a href={link} target={target}>
+      {content}
+    </a>
+  ) : (
+    <>{content}</>
   );
 };

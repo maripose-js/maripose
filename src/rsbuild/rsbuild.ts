@@ -6,6 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { virtualModules } from "./vm/vm.ts";
 import { createRouter } from "./router.ts";
+import fs from "fs-extra";
 
 const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
@@ -42,10 +43,15 @@ export const rsBuildInstance = async (
       ctx.config?.rsbuild!
     ),
   });
+  const tempDir = path.join(
+    ctx.config?.root!,
+    "node_modules",
+    ".maripose/runtime"
+  );
 
   rsbuild.addPlugins([
     virtualModules({
-      tempDir: ".maripose/runtime",
+      tempDir,
       router,
       config: ctx.config!,
     }),

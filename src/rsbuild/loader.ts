@@ -1,8 +1,8 @@
-import type { Rspack } from "@rsbuild/core";
+import { type Rspack } from "@rsbuild/core";
 import grayMatter from "gray-matter";
-import path from "path";
 import { createProcessor } from "@mdx-js/mdx";
 import { buildOptions } from "./mdx/plugins.ts";
+import type { MariposeConfig } from "../utils/config.ts";
 
 export default async function mdxLoader(
   context: Rspack.LoaderContext<any>,
@@ -10,7 +10,7 @@ export default async function mdxLoader(
   callback: Rspack.LoaderContext["callback"]
 ) {
   try {
-    const options = context.getOptions();
+    const options = context.getOptions() as MariposeConfig;
     const filePath = context.resourcePath;
     const { data, content } = grayMatter(source);
 
@@ -25,14 +25,18 @@ export default async function mdxLoader(
     //@ts-ignore
     const meta = compiler.data("meta");
 
+    const pagedata = {
+      ...meta,
+      ...data,
+    };
+
     const result = `const frontmatter = ${JSON.stringify(data)};
 ${code}
 MDXContent.__PAGE_META__ = {};
 
-MDXContent.__PAGE_META__["${encodeURIComponent(filePath)}"] = ${JSON.stringify({
-      ...meta,
-      ...data,
-    })};
+MDXContent.__PAGE_META__["${encodeURIComponent(filePath)}"] = ${JSON.stringify(
+      pagedata
+    )};
 `;
 
     callback(null, result);

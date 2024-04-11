@@ -4,7 +4,7 @@ import { siteData } from "virtual-site-data";
 import { Link } from "react-router-dom";
 import { useIcon } from "../lib/useIcon.tsx";
 import type { HomeButton } from "../../utils/config.ts";
-import { BentoGrid, BentoGridItem } from "../components/bento-grid.tsx";
+import { BentoGrid, BentoGridItem } from "#/bento-grid.tsx";
 
 export const HomePage = ({ data }: { data: PageData }) => {
   return (

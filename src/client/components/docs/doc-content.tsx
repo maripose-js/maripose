@@ -10,6 +10,7 @@ import { Blockquote } from "./comps/blockquote.tsx";
 import { Image } from "./comps/image.tsx";
 import { Callout } from "./comps/callout.tsx";
 import { Kbd } from "./comps/kbd.tsx";
+import { Tooltip } from "#/docs/comps/tooltip.tsx";
 
 export const DocContent = ({ data }: { data: PageData }) => {
   const Content = () => {
@@ -53,6 +54,7 @@ export const DocContent = ({ data }: { data: PageData }) => {
           pre: Pre,
           Callout,
           Kbd,
+          Tooltip,
         }}
       >
         <Content />

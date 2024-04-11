@@ -1,7 +1,8 @@
-import { routes, siteData } from "virtual-site-data";
+import { siteData } from "virtual-site-data";
 import { matchRoutes, type Route } from "../../rsbuild/router.ts";
 import type { PageData } from "../app.tsx";
 import { isSamePath } from "ufo";
+import { routes } from "virtual-routes";
 export const usePage = async (
   pathname: string
   // navigate: (to: string) => void

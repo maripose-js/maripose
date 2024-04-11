@@ -1,8 +1,8 @@
 import type { RsbuildPlugin } from "@rsbuild/core";
-import { RspackVirtualModulePlugin } from "rspack-plugin-virtual-module";
 import { createRouter } from "../router.ts";
 import type { MariposeConfig } from "../../utils/config.ts";
 import { customCss } from "./custom-css.ts";
+import { virtualModulesPlugin } from "./plugin.ts";
 
 export type VmCtx = {
   tempDir: string;
@@ -16,15 +16,14 @@ export function virtualModules(ctx: VmCtx): RsbuildPlugin {
     setup(api) {
       api.modifyBundlerChain(async (bundlerChain) => {
         const runtimeModule: Record<string, string> = {};
-        for (const factory of [siteData, customCss]) {
+        for (const factory of [siteData, customCss, routes]) {
           const moduleResult = await factory(ctx);
           Object.assign(runtimeModule, moduleResult);
         }
 
-        bundlerChain.plugin("virtual-modules").use(
-          //@ts-ignore
-          new RspackVirtualModulePlugin(runtimeModule, ctx.tempDir)
-        );
+        bundlerChain
+          .plugin("virtual-modules")
+          .use(virtualModulesPlugin(runtimeModule, ctx.tempDir));
       });
     },
   };
@@ -32,8 +31,14 @@ export function virtualModules(ctx: VmCtx): RsbuildPlugin {
 
 const siteData = async (ctx: VmCtx) => {
   return {
-    ["virtual-site-data"]:
-      ctx.router.generate() +
-      `; export const siteData = ${JSON.stringify(ctx.config.site)};`,
+    ["virtual-site-data"]: `export const siteData = ${JSON.stringify(
+      ctx.config.site
+    )};`,
+  };
+};
+
+const routes = async (ctx: VmCtx) => {
+  return {
+    ["virtual-routes"]: ctx.router.generate(),
   };
 };

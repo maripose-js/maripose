@@ -1,4 +1,4 @@
-import { routes } from "virtual-site-data";
+import { routes } from "virtual-routes";
 import type { Route, Tab } from "../../rsbuild/router.ts";
 
 export type GroupedRoutes = {

@@ -21,5 +21,6 @@ export default defineConfig({
     "virtual-site-data",
     "tailwindcss",
     "virtual-custom-css",
+    "virtual-routes",
   ],
 });

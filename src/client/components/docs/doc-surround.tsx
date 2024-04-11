@@ -1,7 +1,7 @@
 import type { PageData } from "@/app.tsx";
 import { IconBase } from "../icons/base.tsx";
 import { Text } from "@mantine/core";
-import { routes as _routes } from "virtual-site-data";
+import { routes as _routes } from "virtual-routes";
 import { Link } from "react-router-dom";
 
 export const DocSurround = ({ data }: { data: PageData }) => {

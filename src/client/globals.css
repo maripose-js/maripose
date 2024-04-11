@@ -18,6 +18,10 @@
     --muted-foreground: 0 0% 94.1%;
 }
 
+.mantine-Tooltip-tooltip {
+    @apply mp-mantine-body border mp-mantine-border mp-mantine-text shadow-2xl
+}
+
 .body {
     background-color: rgb(var(--mantine-color-body) / 1) !important;
 }
