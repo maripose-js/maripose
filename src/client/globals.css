@@ -219,7 +219,7 @@
     transition: top .25s cubic-bezier(0,1,.5,1), border-left-color .5s, opacity .25s;
 }
 
-.mp-doc-toc-link::before {
+.mp-doc-toc-link::before, .mp-step-item::before {
     position: absolute;
     inset-inline-start: 0;
     height: 100%;

@@ -11,6 +11,7 @@ import { Image } from "./comps/image.tsx";
 import { Callout } from "./comps/callout.tsx";
 import { Kbd } from "./comps/kbd.tsx";
 import { Tooltip } from "#/docs/comps/tooltip.tsx";
+import { Step, Steps } from "#/docs/comps/steps.tsx";
 
 export const DocContent = ({ data }: { data: PageData }) => {
   const Content = () => {
@@ -55,6 +56,8 @@ export const DocContent = ({ data }: { data: PageData }) => {
           Callout,
           Kbd,
           Tooltip,
+          Steps,
+          Step,
         }}
       >
         <Content />
