@@ -9,7 +9,12 @@
     "dev": "tsup && bun --watch ./src/cli.ts dev --root ./cord-test",
     "build:test": "tsup && bun ./src/cli.ts build --root ./cord-test",
     "build": "tsup",
-    "reset": "kms rmdir node_modules && kms del bun.lockb && bun install && bun dev"
+    "reset": "kms rmdir node_modules && kms del bun.lockb && bun install && bun dev",
+    "lint": "eslint --cache --ext .ts,.js,.mjs,.cjs . && prettier -c src test",
+    "lint:fix": "automd && eslint --cache --ext .ts,.js,.mjs,.cjs . --fix && prettier -c src test -w",
+    "prepack": "bun build",
+    "release": "bun run test && changelogen --release && npm publish && git push --follow-tags",
+    "test": "bun lint && bun test"
   },
   "devDependencies": {
     "@clack/prompts": "^0.7.0",
@@ -19,12 +24,17 @@
     "@types/fs-extra": "^11.0.4",
     "@types/react": "^18.2.62",
     "@types/react-dom": "^18.2.19",
+    "automd": "^0.3.7",
     "autoprefixer": "^10.4.19",
+    "changelogen": "^0.5.5",
     "citty": "^0.1.6",
+    "eslint": "^8.57.0",
+    "eslint-config-unjs": "^0.2.1",
     "postcss": "^8.4.38",
     "postcss-loader": "^8.1.1",
     "postcss-preset-mantine": "^1.13.0",
     "postcss-simple-vars": "^7.0.1",
+    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
     "tsup": "^8.0.2",
     "typescript": "^5.4.3"
@@ -58,6 +68,7 @@
     "tailwind-merge": "^2.2.2",
     "ufo": "^1.5.2",
     "unified": "^11.0.4",
+    "unist-util-visit": "^5.0.0",
     "unist-util-visit-children": "^3.0.0"
   }
 }
