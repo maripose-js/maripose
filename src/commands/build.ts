@@ -1,10 +1,10 @@
 import path from "node:path";
 import { defineCommand } from "citty";
-import { spinner, note, log, intro, outro } from "@clack/prompts";
+import { log, intro, outro } from "@clack/prompts";
 import fs from "fs-extra";
 import pc from "picocolors";
 import { createLogger } from "../utils/logger.ts";
-import { createContext, type MariposeInstance } from "../context.ts";
+import { createContext } from "../context.ts";
 import { getServerOptions } from "../server/http.ts";
 import { rsBuildInstance } from "../rsbuild/rsbuild.ts";
 import { createRouter } from "../rsbuild/router.ts";

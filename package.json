@@ -10,8 +10,8 @@
     "build:test": "tsup && bun ./src/cli.ts build --root ./cord-test",
     "build": "tsup",
     "reset": "kms rmdir node_modules && kms del bun.lockb && bun install && bun dev",
-    "lint": "eslint --cache --ext .ts,.js,.mjs,.cjs . && prettier -c src test",
-    "lint:fix": "automd && eslint --cache --ext .ts,.js,.mjs,.cjs . --fix && prettier -c src test -w",
+    "lint": "eslint --cache --ext .ts,.js,.mjs,.cjs .",
+    "lint:fix": "automd && eslint --cache --ext .ts,.js,.mjs,.cjs . --fix && prettier -c src -w",
     "prepack": "bun build",
     "release": "bun run test && changelogen --release && npm publish && git push --follow-tags",
     "test": "bun lint && bun test"
