@@ -46,7 +46,7 @@ export const DocContent = ({ data }: { data: PageData }) => {
               {...props}
             />
           ),
-          p: (props) => <p {...props} className={"py-4"} />,
+          p: (props) => <p {...props} className={"py-4 leading-loose"} />,
           ul: Ul,
           li: Li,
           ol: Ol,

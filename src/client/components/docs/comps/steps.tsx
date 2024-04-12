@@ -12,9 +12,9 @@ export const Step = ({
   title?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col gap-1 ml-2", className)}>
+    <div className={cn("flex flex-col space-y-3 ml-2 w-[85%] sm:w-full [&>p]:!py-0l", className)}>
       <Title order={4}>{title}</Title>
-      <div className={"[&>p]:!py-0"}>{children}</div>
+      {children}
     </div>
   );
 };
