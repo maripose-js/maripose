@@ -1,10 +1,10 @@
 import type { PageData } from "@/app.tsx";
 import { Title } from "@mantine/core";
 import React, { type Dispatch, type SetStateAction, useState } from "react";
-
+import { Text } from "@mantine/core";
 const useIntersectionObserver = (
   setActiveId: Dispatch<SetStateAction<string>>,
-  isScrolling: boolean
+  isScrolling: boolean,
 ) => {
   let listRef = React.useRef<IntersectionObserverEntry[]>([]);
 
@@ -111,13 +111,19 @@ export const DocToc = ({ data }: { data: PageData }) => {
                       window.scrollTo({ top: targetTop, behavior: "smooth" });
                     }
                     setActiveId(heading.id);
-                    setTimeout(() => setIsScrolling(false), 1000); // adjust the timeout as needed
+                    setTimeout(() => setIsScrolling(false), 1000);
                   }}
                   className={
                     "whitespace-nowrap overflow-ellipsis w-full h-full"
                   }
                 >
-                  {heading.text}
+                  <Text
+                    c={"dimmed"}
+                    className={"hover:!text-white"}
+                    size={"md"}
+                  >
+                    {heading.text}
+                  </Text>
                 </a>
               </li>
             ))}

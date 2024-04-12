@@ -6,228 +6,272 @@
 
 .dark,
 :root[data-mantine-color-scheme="dark"] {
-    --mantine-color-body: rgb(23, 23, 23) !important;
-    --mantine-color-default: rgb(36 36 36) !important;
-    --mantine-color-default-hover: rgb(30 30 30) !important;
-    --mantine-color-default-border: rgb(60, 60, 60) !important;
-    --mantine-color-text: rgba(255, 255, 245, 0.86) !important;
-    --muted-foreground: 0 0% 15%;
+  --mantine-color-body: rgb(23, 23, 23) !important;
+  --mantine-color-default: rgb(36 36 36) !important;
+  --mantine-color-default-hover: rgb(30 30 30) !important;
+  --mantine-color-default-border: rgb(60, 60, 60) !important;
+  --mantine-color-text: rgba(255, 255, 245, 0.86) !important;
+  --muted-foreground: 0 0% 15%;
 }
 
 :root[data-mantine-color-scheme="light"] {
-    --muted-foreground: 0 0% 94.1%;
+  --muted-foreground: 0 0% 94.1%;
 }
 
 .mantine-Tooltip-tooltip {
-    @apply mp-mantine-body border mp-mantine-border mp-mantine-text shadow-2xl
+  @apply mp-mantine-body border mp-mantine-border mp-mantine-text shadow-2xl;
 }
 
 .body {
-    background-color: rgb(var(--mantine-color-body) / 1) !important;
+  background-color: rgb(var(--mantine-color-body) / 1) !important;
 }
 
 .mp-mantine-border {
-    border-color: var(--mantine-color-default-border);
+  border-color: var(--mantine-color-default-border);
 }
 
 .mp-mantine-body {
-    background-color: var(--mantine-color-body);
+  background-color: var(--mantine-color-body);
 }
 
 .mp-mantine-body-75 {
-    background-color: rgb(var(--mantine-color-body) / 0.75);
+  background-color: rgb(var(--mantine-color-body) / 0.75);
 }
 
 .mp-mantine-text {
-    color: var(--mantine-color-text);
+  color: var(--mantine-color-text);
 }
 
 .mantine-Text-root {
-    color: var(--mantine-color-text);
+  color: var(--mantine-color-text);
 }
 
 .mp-mantine-hover {
-    color: var(--mantine-color-default-hover);
+  color: var(--mantine-color-default-hover);
 }
 
 .mp-app-header {
-    @apply relative flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm items-center mp-mantine-body-75 h-full;
+  @apply relative flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm items-center mp-mantine-body-75 h-full;
 }
 
 .mp-app-navbar {
-    @apply max-w-[85rem] w-full mx-auto px-4;
+  @apply max-w-[85rem] w-full mx-auto px-4;
 }
 
 .mp-navbar-logo {
-    @apply flex flex-row items-center gap-x-2 text-xl font-semibold dark:text-white;
+  @apply flex flex-row items-center gap-x-2 text-xl font-semibold dark:text-white;
 }
 
 .mp-logo-image {
-    @apply w-8 h-auto;
+  @apply w-8 h-auto;
 }
 
 /*TODO: add animation*/
 .mp-collapse-box {
-    @apply ease-in-out border-b z-[100] mp-mantine-border shadow-xl mp-mantine-body rounded-b-md md:hidden w-full h-full fixed top-[calc(3.75rem*var(--mantine-scale))] max-h-[calc(100vh-3.75rem*var(--mantine-scale))];
+  @apply ease-in-out border-b z-[100] mp-mantine-border shadow-xl mp-mantine-body rounded-b-md md:hidden w-full h-full fixed top-[calc(3.75rem*var(--mantine-scale))] max-h-[calc(100vh-3.75rem*var(--mantine-scale))];
 }
 
 .mp-collapse-box-opened {
-    @apply opacity-100 h-auto;
+  @apply opacity-100 h-auto;
 }
 
 .mp-collapse-box-closed {
-    @apply opacity-0 h-0 hidden overflow-hidden;
+  @apply opacity-0 h-0 hidden overflow-hidden;
 }
 
 .mp-nav-link {
-    @apply pb-[8px] pt-[4px] w-full transition-[color_.25s] hover:text-[var(--mantine-primary-color-filled)] active:text-[var(--mantine-primary-color-filled)];
+  @apply pb-[8px] pt-[4px] w-full transition-[color_.25s] hover:text-[var(--mantine-primary-color-filled)] active:text-[var(--mantine-primary-color-filled)];
 }
 
 .mp-nav-link-not-collapsed {
-    @apply hidden sm:block;
+  @apply hidden sm:block;
 }
 
 .mp-nav-link-border {
-    @apply border-b mp-mantine-border;
+  @apply border-b mp-mantine-border;
 }
 
 .mp-nav-link-borderless {
-    @apply !py-[5px] !pl-[8px] !pr-[5px];
+  @apply !py-[5px] !pl-[8px] !pr-[5px];
 }
 
 .mp-collapse-box-inner {
-    @apply w-full h-full p-4 px-[3rem] flex mt-10;
+  @apply w-full h-full p-4 px-[3rem] flex mt-10;
 }
 
 .mp-collapse-box-links {
-    @apply flex flex-col gap-2 w-full;
+  @apply flex flex-col gap-2 w-full;
 }
 
 .mp-collapse-box-social-links {
-    @apply flex w-full flex-wrap justify-center my-2;
+  @apply flex w-full flex-wrap justify-center my-2;
 }
 
 .mp-navbar-social-links {
-    @apply flex-row hidden md:flex;
+  @apply flex-row hidden md:flex;
 }
 
 .mp-navbar-links {
-    @apply flex flex-row gap-2 w-full;
+  @apply flex flex-row gap-2 w-full;
 }
 
 .mp-navbar-inner {
-    @apply flex items-center justify-between;
+  @apply flex items-center justify-between;
 }
 
 .mp-mantine-body-light {
-    @apply bg-[var(--mantine-primary-color-light)];
+  @apply bg-[var(--mantine-primary-color-light)];
 }
 
 .mp-mantine-text-light {
-    @apply text-[var(--mantine-primary-color-light-color)];
+  @apply text-[var(--mantine-primary-color-light-color)];
 }
 
 .mp-switch-border {
-    border: calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-4) !important;
+  border: calc(0.0625rem * var(--mantine-scale)) solid
+    var(--mantine-color-dark-4) !important;
 }
 
 .mp-primary-text-color {
-    color: var(--mantine-primary-color-filled) !important;
+  color: var(--mantine-primary-color-filled) !important;
 }
 
 .mp-home-buttons {
-    @apply flex items-center justify-center gap-x-6;
+  @apply flex items-center justify-center gap-x-6;
 }
 
 .mp-home-wrapper {
-    @apply relative isolate px-6 pt-10 lg:px-8;
+  @apply relative isolate px-6 pt-10 lg:px-8;
 }
 
 .mp-home-title {
-    @apply mp-primary-text-color !text-5xl sm:!text-7xl tracking-tight;
+  @apply mp-primary-text-color !text-5xl sm:!text-7xl tracking-tight;
 }
 
 .mp-home-col {
-    @apply text-center gap-5 flex flex-col items-center;
+  @apply text-center gap-5 flex flex-col items-center;
 }
 
 .mp-bento-grid {
-    @apply grid md:auto-rows-auto grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto mb-5 py-10;
+  @apply grid md:auto-rows-auto grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto mb-5 py-10;
 }
 
 .mp-bento-grid-item {
-    @apply min-h-[11rem] z-[5] row-span-1 rounded-xl hover:shadow-xl transition duration-200 mp-card-bg dark:shadow-none p-4 mp-mantine-border border justify-between flex flex-col space-y-4;
+  @apply min-h-[11rem] z-[5] row-span-1 rounded-xl hover:shadow-xl transition duration-200 mp-card-bg dark:shadow-none p-4 mp-mantine-border border justify-between flex flex-col space-y-4;
 }
 
 .mp-card-bg {
-    background: var(--mantine-color-default-hover);
+  background: var(--mantine-color-default-hover);
 }
 
 .mp-footer {
-    @apply border-t mp-mantine-border mp-mantine-body flex flex-row justify-between items-center py-3 px-2 z-[10] relative;
+  @apply border-t mp-mantine-border mp-mantine-body flex flex-row justify-between items-center py-3 px-2 z-[10] relative;
 }
 
 .mp-doc-tabs {
-    @apply flex flex-col space-y-2 pb-4 w-full;
+  @apply flex flex-col space-y-2 pb-4 w-full;
 }
 
 .mp-doc-tab {
-    @apply flex items-center gap-1;
+  @apply flex items-center gap-1;
 }
 
 .mp-doc-link {
-    @apply flex items-center gap-0.5 px-2 py-1.5 hover:bg-[hsl(var(--muted-foreground))]/50 rounded-lg;
+  @apply flex items-center gap-0.5 px-2 py-1.5 hover:bg-[hsl(var(--muted-foreground))]/50 rounded-lg;
 }
 
 .mp-doc-active-tab {
-    @apply bg-[var(--mantine-primary-color-5)]
+  @apply bg-[var(--mantine-primary-color-5)];
 }
 
 .mp-doc-active-text {
-    @apply !text-[var(--mantine-primary-color-5)]
+  @apply !text-[var(--mantine-primary-color-5)];
 }
 
 .mp-doc-active-link {
-    @apply text-[var(--mantine-primary-color-5)] bg-[hsl(var(--muted-foreground))]/50;
+  @apply text-[var(--mantine-primary-color-5)] bg-[hsl(var(--muted-foreground))]/50;
 }
 
 .mp-text-shadow {
-    text-shadow: 2px 2px 19px rgba(0, 0, 0, 0.75);
+  text-shadow: 2px 2px 19px rgba(0, 0, 0, 0.75);
 }
 
 .mp-doc-header {
-    @apply relative border-b mp-mantine-border pt-8 pb-3.5;
+  @apply relative border-b mp-mantine-border pt-8 pb-3.5;
 }
 
 .mp-doc-header-title {
-    @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
+  @apply flex flex-col lg:flex-row lg:items-center lg:justify-between;
 }
 
 .mp-default-color-bg {
-    @apply bg-[var(--mantine-color-default)];
+  @apply bg-[var(--mantine-color-default)];
 }
 
 .mp-text-dimmed {
-    color: var(--mantine-color-dimmed);
+  color: var(--mantine-color-dimmed);
 }
 
 .mp-doc-toc-link-active::before {
-    border-inline-start: 2px solid var(--mantine-primary-color-5) !important;
-    z-index: 10;
-    height: var(--before-height) !important;
-    top: var(--before-top) !important;
-    transition: top .25s cubic-bezier(0,1,.5,1), border-left-color .5s, opacity .25s;
+  border-inline-start: 2px solid var(--mantine-primary-color-5) !important;
+  z-index: 10;
+  height: var(--before-height) !important;
+  top: var(--before-top) !important;
+  transition:
+    top 0.25s cubic-bezier(0, 1, 0.5, 1),
+    border-left-color 0.5s,
+    opacity 0.25s;
 }
 
-.mp-doc-toc-link::before, .mp-step-item::before {
-    position: absolute;
-    inset-inline-start: 0;
-    height: 100%;
-    top: 0;
-    border-inline-start: 2px solid var(--mantine-color-default-border);
-    content: " ";
+.mp-doc-toc-link::before,
+.mp-step-item::before {
+  position: absolute;
+  inset-inline-start: 0;
+  height: 100%;
+  top: 0;
+  border-inline-start: 2px solid var(--mantine-color-default-border);
+  content: " ";
 }
 
 .mp-doc-toc-link {
-    @apply flex items-center pr-1.5 pl-2 py-1 hover:bg-[hsl(var(--muted-foreground))]/50 rounded-lg cursor-pointer ml-0.5
+  @apply flex items-center pr-1.5 pl-2 py-1 rounded-lg cursor-pointer ml-0.5;
+}
+
+[data-rehype-custom-code] code {
+  @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0;
+  counter-reset: line;
+  box-decoration-break: clone;
+}
+
+[data-rehype-custom-code] .line {
+  @apply px-4 min-h-[1rem] py-0.5 w-full inline-block;
+}
+
+[data-rehype-custom-code] [data-line-numbers] .line {
+  @apply px-2;
+}
+
+[data-rehype-custom-code] [data-line-numbers] > .line::before {
+  @apply text-zinc-50/40 text-xs;
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  margin-right: 1.4rem;
+  text-align: right;
+}
+
+[data-rehype-custom-code] .line--highlighted {
+  @apply bg-zinc-700/50;
+}
+
+[data-rehype-custom-code] .line-highlighted span {
+  @apply relative;
+}
+
+[data-rehype-custom-code] .word--highlighted {
+  @apply rounded-md bg-zinc-700/50 border-zinc-700/70 p-1;
+}
+
+.dark [data-rehype-custom-code] .word--highlighted {
+  @apply bg-zinc-900;
 }

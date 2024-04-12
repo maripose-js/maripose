@@ -1,13 +1,14 @@
 import { siteData } from "virtual-site-data";
-import { matchRoutes, type Route } from "../../rsbuild/router.ts";
-import type { PageData } from "../app.tsx";
 import { isSamePath } from "ufo";
 import { routes } from "virtual-routes";
+import { matchRoutes, type Route } from "../../rsbuild/router.ts";
+import type { PageData } from "../app.tsx";
 export const usePage = async (
-  pathname: string
+  pathname: string,
   // navigate: (to: string) => void
 ): Promise<PageData | undefined> => {
   let route: Route;
+
   let meta: any;
 
   const _match = matchRoutes(routes, pathname);
@@ -22,7 +23,7 @@ export const usePage = async (
         return isSamePath(from, match.route);
       })
     ) {
-      //find a way to navigate in ssr
+      // find a way to navigate in ssr
       // navigate(redirect);
       return;
     }

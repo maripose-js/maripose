@@ -1,9 +1,9 @@
+import path from "node:path";
+import pt from "node:path";
 import { joinURL, withLeadingSlash } from "ufo";
-import path from "path";
-import pt from "path";
-import type { MariposeInstance } from "../context.ts";
 import React from "react";
 import { Glob } from "bun";
+import type { MariposeInstance } from "../context.ts";
 
 export type RouteInput = {
   route: string;
@@ -29,7 +29,7 @@ export type Route = RouteInput & {
 };
 
 export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
-  let routes: RouteInput[] = [];
+  const routes: RouteInput[] = [];
 
   return {
     init: async () => {
@@ -38,22 +38,24 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
         cwd: routesDir,
       });
 
-      ctx.config?.site?.sidebar?.forEach((sidebarItem) => {
-        for (const page of sidebarItem.pages) {
-          const fullPath = path.join(routesDir, page.file);
-          routes.push({
-            page,
-            file: page.file,
-            route: withLeadingSlash(resolveRouteFromPath(page.file, ctx)),
-            fullPath,
-            tab: {
-              name: sidebarItem.group,
-              path: pt.join(routesDir, sidebarItem.group),
-            },
-            custom: false,
-          });
+      if (ctx.config?.site?.sidebar) {
+        for (const sidebarItem of ctx.config?.site?.sidebar) {
+          for (const page of sidebarItem.pages) {
+            const fullPath = path.join(routesDir, page.file);
+            routes.push({
+              page,
+              file: page.file,
+              route: withLeadingSlash(resolveRouteFromPath(page.file, ctx)),
+              fullPath,
+              tab: {
+                name: sidebarItem.group,
+                path: pt.join(routesDir, sidebarItem.group),
+              },
+              custom: false,
+            });
+          }
         }
-      });
+      }
       for await (const file of files) {
         if (resolveDefaultPages(routesDir, file, ctx)) {
           routes.push({
@@ -74,8 +76,8 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
           (route, index) =>
             `const R${index} = lazyWithPreload(() => import('${route.fullPath.replaceAll(
               "\\",
-              "/"
-            )}')) `
+              "/",
+            )}')) `,
         )
         .join("; ")} ; export const routes = [${routes
         .map(
@@ -83,15 +85,15 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
             `{ fullPath: '${route.fullPath.replaceAll("\\", "/")}', route: '${
               route.route
             }', comp: createElement(R${index}), tab: ${JSON.stringify(
-              route.tab
+              route.tab,
             )}, file: '${
               route.file
             }', preload: async () => { await R${index}.preload(); return import("${route.fullPath.replaceAll(
               "\\",
-              "/"
+              "/",
             )}") }, custom: ${route.custom}, page: ${JSON.stringify(
-              route.page
-            )} }`
+              route.page,
+            )} }`,
         )
         .join(",")}]`;
     },
@@ -102,31 +104,31 @@ export const createRouter = (routesDir: string, ctx: MariposeInstance) => {
 const resolveDefaultPages = (
   routesDir: string,
   file: string,
-  ctx: MariposeInstance
+  ctx: MariposeInstance,
 ) => {
   const pages = ["index.mdx", ...(ctx.config?.site?.pages ?? [])].map(
     (file) => {
       return path.join(routesDir, file).replaceAll("/", "\\");
-    }
+    },
   );
   const fullPath = path.join(routesDir, file).replaceAll("/", "\\");
 
-  return pages.some((page) => page === fullPath);
+  return pages.includes(fullPath);
 };
 
 export const resolveRouteFromPath = (
   _path: string,
-  ctx: MariposeInstance
+  ctx: MariposeInstance,
 ): string => {
   const path = /index\.(mdx|md)$/.test(_path)
     ? _path
-    : joinURL(ctx.config?.site?.basePath!, _path);
+    : joinURL(ctx.config?.site?.basePath as string, _path);
 
   return path.replace(/\.[^.]+$/, "").replaceAll("index", "/");
 };
 export const matchRoutes = (
   routes: Route[],
-  pathname: string
+  pathname: string,
 ): Route | undefined | null => {
   if (pathname === "/" || pathname === "") {
     return routes.find((route) => route.route === "/");
@@ -149,8 +151,7 @@ const matchPath = (routePath: string, targetPath: string): boolean => {
     return false;
   }
 
-  for (let i = 0; i < routeSegments.length; i++) {
-    const routeSegment = routeSegments[i];
+  for (const [i, routeSegment] of routeSegments.entries()) {
     const targetSegment = targetSegments[i];
 
     if (routeSegment.startsWith(":")) {

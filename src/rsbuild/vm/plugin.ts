@@ -1,10 +1,10 @@
+import { extname, join } from "node:path";
 import fs from "fs-extra";
 import type { RspackPluginInstance, Compiler } from "@rspack/core";
-import { extname, join } from "path";
 
 export const virtualModulesPlugin = (
   modules: Record<string, string>,
-  tempDir: string
+  tempDir: string,
 ): RspackPluginInstance => {
   fs.mkdirSync(tempDir, { recursive: true });
 
@@ -13,9 +13,9 @@ export const virtualModulesPlugin = (
 
   return {
     apply: (compiler: Compiler) => {
-      Object.entries(modules).forEach(([path, content]) => {
+      for (const [path, content] of Object.entries(modules)) {
         fs.writeFileSync(normalizePath(path), content);
-      });
+      }
 
       compiler.options.resolve.modules = [
         ...(compiler.options.resolve.modules || ["node_modules"]),
@@ -25,7 +25,7 @@ export const virtualModulesPlugin = (
       compiler.options.resolve.alias = {
         ...compiler.options.resolve.alias,
         ...Object.fromEntries(
-          Object.keys(modules).map((p) => [p, normalizePath(p)])
+          Object.keys(modules).map((p) => [p, normalizePath(p)]),
         ),
       };
 

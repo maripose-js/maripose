@@ -1,15 +1,15 @@
+import path from "node:path";
 import { defineCommand } from "citty";
-import { createLogger } from "../utils/logger.ts";
 import { spinner, note, log, intro, outro } from "@clack/prompts";
+import fs from "fs-extra";
+import pc from "picocolors";
+import { createLogger } from "../utils/logger.ts";
 import { createContext, type MariposeInstance } from "../context.ts";
 import { getServerOptions } from "../server/http.ts";
 import { rsBuildInstance } from "../rsbuild/rsbuild.ts";
-import fs from "fs-extra";
-import path from "path";
 import { createRouter } from "../rsbuild/router.ts";
-import type { PageData } from "@/app.tsx";
-import pc from "picocolors";
 import { formatBytes, formatTime } from "../utils/helpers.ts";
+import type { PageData } from "@/app.tsx";
 
 const originalConsoleLog = console.log;
 
@@ -28,7 +28,7 @@ export const buildCommand = (sharedArgs: any) =>
 
         await fs.emptydir(ctx.config!.buildDir!);
 
-        //remove console output
+        // remove console output
         console.log = function (msg: string): void {};
 
         const [client, server] = await Promise.all([
@@ -44,13 +44,13 @@ export const buildCommand = (sharedArgs: any) =>
         ]);
         await Promise.all([client.build(), server.build()]);
 
-        //restore console output
+        // restore console output
         console.log = originalConsoleLog;
 
         const serverDir = path.join(
           ctx.config!.buildDir!,
           "server",
-          "index.js"
+          "index.js",
         );
 
         const { default: exports } = await import(serverDir);
@@ -58,7 +58,7 @@ export const buildCommand = (sharedArgs: any) =>
         const render = exports.render as {
           (pathname: string): Promise<{ html: string; data: PageData }>;
         };
-        const routesDir = path.join(ctx.config?.root!, "src");
+        const routesDir = path.join(ctx.config?.root as string, "src");
         const router = createRouter(routesDir, ctx);
 
         await router.init();
@@ -68,7 +68,7 @@ export const buildCommand = (sharedArgs: any) =>
           routes.map(async (route) => {
             try {
               const htmlTemplate = await fs.readFile(
-                path.join(ctx.config?.buildDir!, "index.html")
+                path.join(ctx.config?.buildDir as string, "index.html"),
               );
 
               const { html, data } = await render(route.route);
@@ -81,41 +81,41 @@ export const buildCommand = (sharedArgs: any) =>
                 (route.route === "/" ? "index" : route.route) + ".html";
 
               await fs.outputFile(
-                path.join(ctx.config?.buildDir!, fileName),
-                page
+                path.join(ctx.config?.buildDir as string, fileName),
+                page,
               );
 
               const size = Buffer.byteLength(page, "utf8");
 
               log.step(
                 `Generated ${pc.reset(pc.bold(route.route))} ${pc.dim(
-                  "route"
-                )} (${pc.green(formatBytes(size))})`
+                  "route",
+                )} (${pc.green(formatBytes(size))})`,
               );
-            } catch (err) {
-              console.log(err);
+            } catch (error) {
+              console.log(error);
               ctx.logger.error(`Failed to generate ${route.route} route`);
             }
-          })
+          }),
         );
 
         await fs.remove(path.join(ctx.config!.buildDir!, "server"));
         await fs.remove(
-          path.join(ctx.config!.buildDir!, "static", "js", "async")
+          path.join(ctx.config!.buildDir!, "static", "js", "async"),
         );
 
         log.success(
           `🎉 Production build created in ${pc.green(
-            formatTime(Date.now() - startTime)
-          )}`
+            formatTime(Date.now() - startTime),
+          )}`,
         );
         outro();
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        console.log(error);
         colors.error(
           `Failed to create production build: ${colors.reset(
-            colors.red(colors.bold(err as string))
-          )}`
+            colors.red(colors.bold(error as string)),
+          )}`,
         );
         process.exit(1);
       }

@@ -16,10 +16,12 @@ type Shade =
 
 export const hexToRgb = (color: ColorKey, shade1: Shade, shade: number) => {
   const hex = colors?.[color][shade1];
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  if (!result) return "";
-  return `rgba(${parseInt(result[1], 16)}, ${parseInt(
+  const result = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(hex);
+  if (!result) {
+    return "";
+  }
+  return `rgba(${Number.parseInt(result[1], 16)}, ${Number.parseInt(
     result[2],
-    16
-  )}, ${parseInt(result[3], 16)}, ${shade / 100})`;
+    16,
+  )}, ${Number.parseInt(result[3], 16)}, ${shade / 100})`;
 };

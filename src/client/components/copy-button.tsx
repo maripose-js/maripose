@@ -43,5 +43,5 @@ export const CopyButton = memo(
         <IconBase icon={icon} />
       </ActionIcon>
     );
-  }
+  },
 );

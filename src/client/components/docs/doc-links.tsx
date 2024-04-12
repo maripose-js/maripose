@@ -10,7 +10,7 @@ import { routes } from "virtual-routes";
 export const DocLinks = ({ currentRoute }: { currentRoute: PageData }) => {
   const currentGroup = currentRoute.route;
   const currentRoutes = routes.filter(
-    (e) => e.tab?.name === currentRoute.route?.tab?.name
+    (e) => e.tab?.name === currentRoute.route?.tab?.name,
   );
   const groups = routes
     .filter((e) => e.tab)

@@ -1,13 +1,13 @@
 import { type Rspack } from "@rsbuild/core";
 import grayMatter from "gray-matter";
 import { createProcessor } from "@mdx-js/mdx";
-import { buildOptions } from "./mdx/plugins.ts";
 import type { MariposeConfig } from "../utils/config.ts";
+import { buildOptions } from "./mdx/plugins.ts";
 
 export default async function mdxLoader(
   context: Rspack.LoaderContext<any>,
   source: string,
-  callback: Rspack.LoaderContext["callback"]
+  callback: Rspack.LoaderContext["callback"],
 ) {
   try {
     const options = context.getOptions() as MariposeConfig;
@@ -22,7 +22,7 @@ export default async function mdxLoader(
     });
 
     const code = String(vFile);
-    //@ts-ignore
+    // @ts-ignore
     const meta = compiler.data("meta");
 
     const pagedata = {
@@ -35,13 +35,13 @@ ${code}
 MDXContent.__PAGE_META__ = {};
 
 MDXContent.__PAGE_META__["${encodeURIComponent(filePath)}"] = ${JSON.stringify(
-      pagedata
+      pagedata,
     )};
 `;
 
     callback(null, result);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     return callback(new Error("Failed to parse frontmatter"));
   }
 }

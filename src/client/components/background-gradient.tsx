@@ -50,7 +50,7 @@ export const BackgroundGradientAnimation = ({
     <div
       className={cn(
         "fixed top-0 left-0 h-screen w-full overflow-hidden",
-        containerClassName
+        containerClassName,
       )}
     >
       <svg className="hidden">
@@ -75,7 +75,7 @@ export const BackgroundGradientAnimation = ({
       <div
         className={cn(
           "gradients-container h-full w-full blur-xl absolute left-0 bottom-1/5 -z-10 transform-gpu opacity-20",
-          isSafari ? "blur-2xl" : "[filter:url(#blurMe)_blur(40px)]"
+          isSafari ? "blur-2xl" : "[filter:url(#blurMe)_blur(40px)]",
         )}
       >
         <div
@@ -84,7 +84,7 @@ export const BackgroundGradientAnimation = ({
             `[mix-blend-mode:var(--blending-value)] w-[70%] h-[70%] top-[calc(50%-var(--size)/2 - 10%)] left-[calc(50%-var(--size)/2)]`,
             `[transform-origin:calc(50%-400px)]`,
             `animate-second`,
-            `opacity-100`
+            `opacity-100`,
           )}
         ></div>
         <div
@@ -93,7 +93,7 @@ export const BackgroundGradientAnimation = ({
             `[mix-blend-mode:var(--blending-value)] w-[70%] h-[70%] top-[calc(50%-var(--size)/2 - 10%)] left-[calc(50%-var(--size)/2)]`,
             `[transform-origin:calc(50%+400px)]`,
             `animate-third`,
-            `opacity-100`
+            `opacity-100`,
           )}
         ></div>
         <div
@@ -102,7 +102,7 @@ export const BackgroundGradientAnimation = ({
             `[mix-blend-mode:var(--blending-value)] w-[70%] h-[70%] top-[calc(50%-var(--size)/2 - 10%)] left-[calc(50%-var(--size)/2)]`,
             `[transform-origin:calc(50%-800px)_calc(50%+800px)]`,
             `animate-fifth`,
-            `opacity-100`
+            `opacity-100`,
           )}
         ></div>
       </div>

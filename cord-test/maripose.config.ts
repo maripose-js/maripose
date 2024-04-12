@@ -69,7 +69,7 @@ export default defineConfig({
       },
     ],
     codeHighlighting: {
-      theme: "vitesse-dark",
+      theme: "catppuccin-frappe",
     },
   },
 });

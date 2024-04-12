@@ -17,7 +17,7 @@ export interface MariposeInstance {
 
 export const createContext = async (
   root: string,
-  cmd: "dev" | "build"
+  cmd: "dev" | "build",
 ): Promise<MariposeInstance> => {
   const ctx: MariposeInstance = {
     hooks: createHooks(),

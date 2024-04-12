@@ -1,15 +1,16 @@
-import path from "path";
-import * as fs from "fs";
+import path from "node:path";
+import * as fs from "node:fs";
 import { normalize, resolve } from "pathe";
 import { loadConfig, watchConfig } from "c12";
-import type { MariposeInstance } from "../context.ts";
 import type { WatchOptions } from "chokidar";
-import type { ServerOptions } from "../server/http.ts";
 import { defu } from "defu";
 import type { PluggableList } from "unified";
+
 import type { RsbuildConfig } from "@rsbuild/core";
 import React from "react";
 import type { RehypeShikiOptions } from "@shikijs/rehype";
+import type { ServerOptions } from "../server/http.ts";
+import type { MariposeInstance } from "../context.ts";
 
 export const CONFIG_FILE = "maripose.config.ts";
 export const resolvePath = (root: string, file: string) =>
@@ -273,7 +274,7 @@ export const resolveConfig = async (
   root: string = process.cwd(),
   ctx: MariposeInstance,
   cmd: "dev" | "build",
-  mode: "development" | "production" = "development"
+  mode: "development" | "production" = "development",
 ): Promise<MariposeConfig> => {
   const configFile = resolvePath(root, CONFIG_FILE);
   let userConfig: Partial<MariposeConfig> | undefined;
@@ -287,6 +288,7 @@ export const resolveConfig = async (
     name: "maripose",
   });
 
+  // eslint-disable-next-line prefer-const
   userConfig = config.config as Partial<MariposeConfig>;
 
   const basicRoot = userConfig?.root || root || ".";

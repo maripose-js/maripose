@@ -20,9 +20,10 @@ export const Pre = (props: any) => {
     <pre
       {...props}
       className={
-        "relative overflow-auto rounded-xl [&>code]:bg-gray-300 p-[15px_24px] group"
+        "relative overflow-auto rounded-xl p-[15px_24px] group mp-mantine-border border"
       }
       ref={preRef}
+      data-rehype-custom-code
     >
       {siteData.codeHighlighting.copyButton ? (
         <div className={"absolute top-2 right-2 h-8 w-8"}>

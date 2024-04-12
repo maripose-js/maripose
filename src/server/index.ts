@@ -1,7 +1,7 @@
-import { createContext } from "../context.ts";
-import { getServerOptions } from "./http.ts";
 import chokidar from "chokidar";
+import { createContext } from "../context.ts";
 import { rsBuildInstance } from "../rsbuild/rsbuild.ts";
+import { getServerOptions } from "./http.ts";
 
 export const createDevServer = async (args: any) => {
   const createServer = async () => {
@@ -12,10 +12,10 @@ export const createDevServer = async (args: any) => {
     const watcher = chokidar.watch(
       [ctx.config?.root || "", ctx.config?.publicDir || ""],
       {
-        ignored: [/(^|[\/\\])\../, "**/.git/**", "**/node_modules/**"],
+        ignored: [/(^|[/\\])\../, "**/.git/**", "**/node_modules/**"],
         ignoreInitial: true,
         ignorePermissionErrors: true,
-      }
+      },
     );
 
     const { server } = await builder.startDevServer();

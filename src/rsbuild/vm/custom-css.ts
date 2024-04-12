@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import type { VmCtx } from "./vm.ts";
 
 export const customCss = async (ctx: VmCtx) => {
@@ -10,15 +10,15 @@ export const customCss = async (ctx: VmCtx) => {
 
     content = await Promise.all(
       styles.map(async (style) => {
-        const pt = !path.isAbsolute(style)
-          ? path.join(ctx.config.root!, style)
-          : style;
+        const pt = path.isAbsolute(style)
+          ? style
+          : path.join(ctx.config.root!, style);
         return `import "${pt.replaceAll("\\", "/")}";`;
-      })
+      }),
     );
   }
 
   return {
-    ["virtual-custom-css"]: content.join(" "),
+    "virtual-custom-css": content.join(" "),
   };
 };

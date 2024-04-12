@@ -29,16 +29,16 @@ export function virtualModules(ctx: VmCtx): RsbuildPlugin {
   };
 }
 
-const siteData = async (ctx: VmCtx) => {
+const siteData = (ctx: VmCtx) => {
   return {
-    ["virtual-site-data"]: `export const siteData = ${JSON.stringify(
-      ctx.config.site
+    "virtual-site-data": `export const siteData = ${JSON.stringify(
+      ctx.config.site,
     )};`,
   };
 };
 
-const routes = async (ctx: VmCtx) => {
+const routes = (ctx: VmCtx) => {
   return {
-    ["virtual-routes"]: ctx.router.generate(),
+    "virtual-routes": ctx.router.generate(),
   };
 };

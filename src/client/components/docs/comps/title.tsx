@@ -18,7 +18,7 @@ export const HashTag = ({
 }) => {
   slugger.reset();
   const slug = slugger.slug(
-    (children as React.ReactElement).props.children as string
+    (children as React.ReactElement).props.children as string,
   );
   return (
     <>

@@ -1,12 +1,12 @@
-import type { MariposeInstance } from "../context.ts";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { RsbuildConfig } from "@rsbuild/core";
+import fs from "fs-extra";
+import type { MariposeInstance } from "../context.ts";
 import type { ServerOptions } from "../server/http.ts";
 import type { MariposeConfig } from "../utils/config.ts";
-import path from "path";
-import { fileURLToPath } from "url";
 import { virtualModules } from "./vm/vm.ts";
 import { createRouter } from "./router.ts";
-import fs from "fs-extra";
 
 const dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
@@ -20,13 +20,13 @@ export const SERVER_ENTRY = path.join(PACKAGE_ROOT, "dist", "server.js");
 export const rsBuildInstance = async (
   ctx: MariposeInstance,
   options: ServerOptions,
-  buildOptions?: RsbuildConfig
+  buildOptions?: RsbuildConfig,
 ) => {
   const {
     default: { createRsbuild, mergeRsbuildConfig },
   } = await import("@rsbuild/core");
   const { pluginReact } = await import("@rsbuild/plugin-react");
-  const routesDir = path.join(ctx.config?.root!, "src");
+  const routesDir = path.join(ctx.config?.root as string, "src");
   const router = createRouter(routesDir, ctx);
 
   await router.init();
@@ -34,19 +34,19 @@ export const rsBuildInstance = async (
   const rsBuildConfig = await createRsbuildConfig(
     ctx.config!,
     options,
-    buildOptions
+    buildOptions,
   );
   const rsbuild = await createRsbuild({
     rsbuildConfig: mergeRsbuildConfig(
       buildOptions ?? {},
       rsBuildConfig,
-      ctx.config?.rsbuild!
+      ctx.config?.rsbuild as RsbuildConfig,
     ),
   });
   const tempDir = path.join(
-    ctx.config?.root!,
+    ctx.config?.root as string,
     "node_modules",
-    ".maripose/runtime"
+    ".maripose/runtime",
   );
 
   rsbuild.addPlugins([
@@ -63,9 +63,9 @@ export const rsBuildInstance = async (
 export const createRsbuildConfig = async (
   ctg: MariposeConfig,
   options: ServerOptions,
-  buildOptions: RsbuildConfig = {}
+  buildOptions: RsbuildConfig = {},
 ): Promise<RsbuildConfig> => {
-  const isSsr = buildOptions.output?.distPath?.["server"] !== undefined;
+  const isSsr = buildOptions.output?.distPath?.server !== undefined;
   const browserslist = {
     web: isProduction
       ? ["chrome >= 87", "edge >= 88", "firefox >= 78", "safari >= 14"]
@@ -102,6 +102,7 @@ export const createRsbuildConfig = async (
           .options(swcLoaderOptions)
           .end()
           .use("mdx-loader")
+          // eslint-disable-next-line unicorn/prefer-module
           .loader(require.resolve("../../loader.cjs"))
           .options(ctg);
 
@@ -168,11 +169,11 @@ export const createRsbuildConfig = async (
             },
           },
           chunks: "all",
-          minSize: 30000,
+          minSize: 30_000,
         },
         strategy: "split-by-experience",
         forceSplitting: {
-          mantine: /node_modules[\\/]@mantine/,
+          mantine: /node_modules[/\\]@mantine/,
         },
       },
     },

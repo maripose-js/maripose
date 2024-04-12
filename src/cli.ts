@@ -1,12 +1,9 @@
-import {
-  type ArgsDef,
-  defineCommand,
-  type Resolvable,
-  runMain,
-  showUsage,
-} from "citty";
+import { defineCommand, runMain, showUsage } from "citty";
 import { version } from "../package.json";
 import { createLogger } from "./utils/logger.ts";
+
+import { devCommand } from "./commands/dev.ts";
+import { buildCommand } from "./commands/build.ts";
 
 export const logger = createLogger();
 
@@ -18,16 +15,13 @@ export const cliArgs = {
   },
 } as any;
 
-import { devCommand } from "./commands/dev.ts";
-import { buildCommand } from "./commands/build.ts";
-
 const main = async () => {
   const dev = devCommand(cliArgs);
   const build = buildCommand(cliArgs);
   const main = defineCommand({
     meta: {
       name: "mari",
-      version: version,
+      version,
       description: "Maripose",
     },
     subCommands: {
@@ -35,7 +29,7 @@ const main = async () => {
       build,
     },
     run({ args }) {
-      if (args._.length < 1) {
+      if (args._.length === 0) {
         showUsage(main);
       }
     },
@@ -46,7 +40,7 @@ const main = async () => {
 
 try {
   await main();
-} catch (err) {
-  logger.error(err as unknown as string);
+} catch (error) {
+  logger.error(error as unknown as string);
   process.exit(1);
 }

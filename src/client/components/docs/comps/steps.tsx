@@ -12,7 +12,12 @@ export const Step = ({
   title?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col space-y-3 ml-2 w-[85%] sm:w-full [&>p]:!py-0l", className)}>
+    <div
+      className={cn(
+        "flex flex-col space-y-3 ml-2 w-[85%] sm:w-full [&>p]:!py-0l",
+        className,
+      )}
+    >
       <Title order={4}>{title}</Title>
       {children}
     </div>

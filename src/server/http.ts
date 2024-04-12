@@ -23,9 +23,10 @@ export const getServerOptions = async (ctx: MariposeInstance) => {
       hostname: options?.hostname ?? "localhost",
       open: options?.open,
     };
-  } catch (err) {
-    ctx.logger.error(`Failed to start http server ${err}`);
+  } catch (error) {
+    ctx.logger.error(`Failed to start http server ${error}`);
     await ctx.hooks.callHook("close", {});
+    // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1);
   }
 };
