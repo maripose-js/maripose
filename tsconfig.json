@@ -28,6 +28,7 @@
       "@/*": ["./src/client/*"],
       "#/*": ["./src/client/components/*"],
       "#tailwind-config": ["./tailwind.config.ts"],
-    }
-  }
+    },
+  },
+  "include": ["./src/**/*"],
 }

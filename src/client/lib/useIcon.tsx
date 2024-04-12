@@ -1,12 +1,14 @@
 import type { IconType } from "../../utils/config.ts";
-import { IconBase } from "../components/icons/base.tsx";
+import { IconBase } from "#/icons/base.tsx";
 
 export const useIcon = (icon: IconType | undefined) => {
-  if (!icon) return null;
-
-  if (typeof icon === "string") {
-    return <IconBase icon={icon} />;
-  } else {
-    return <IconBase icon={icon.icon} size={icon.size} />;
+  if (!icon) {
+    return null;
   }
+
+  return typeof icon === "string" ? (
+    <IconBase icon={icon} />
+  ) : (
+    <IconBase icon={icon.icon} size={icon.size} />
+  );
 };

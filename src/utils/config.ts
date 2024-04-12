@@ -156,6 +156,12 @@ export type CodeHighlightingOptions = {
    * @default true
    */
   copyButton?: boolean;
+
+  /**
+   * Remove theme background and use default background
+   * @default true
+   */
+  noBackground?: boolean;
 } & RehypeShikiOptions;
 
 export type SidebarItem = {
@@ -352,6 +358,7 @@ export const resolveConfig = async (
       codeHighlighting: defu(userConfig?.site?.codeHighlighting, {
         copyButton: true,
         theme: "andromeeda",
+        noBackground: true,
       }),
     },
   } as MariposeConfig;

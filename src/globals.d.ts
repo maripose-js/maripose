@@ -1,4 +1,3 @@
-import type { Route } from "./rsbuild/router.ts";
 
 declare module "virtual-site-data" {
   import type { SiteConfig } from "./utils/config.ts";
@@ -8,5 +7,6 @@ declare module "virtual-site-data" {
 declare module "virtual-custom-css";
 
 declare module "virtual-routes" {
+  import type { Route } from "./rsbuild/router.ts";
   export const routes: Route[];
 }

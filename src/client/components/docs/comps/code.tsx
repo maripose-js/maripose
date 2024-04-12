@@ -1,6 +1,6 @@
-import { CopyButton } from "../../copy-button.tsx";
 import { siteData } from "virtual-site-data";
 import { useRef } from "react";
+import { CopyButton } from "../../copy-button.tsx";
 
 export const Code = (props: any) => {
   return (
